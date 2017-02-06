@@ -1,0 +1,41 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+	<ui:define name="content">
+		<h:form>
+			<b:panel col-md="12" look="primary" title="Meine Fächer"
+				showCollapseLink="false">
+
+				<b:dataTable disabled="#{empty fachBean.faecherListe}"
+					scrollSize="800px" value="#{fachBean.faecherListe}"
+					scrollCollapse="true" var="fach" fixedHeader="true"
+					scroll-x="false" responsive="true" lang="de">
+					<b:dataTableColumn value="#{fach.fachId}" label="Id" />
+					<b:dataTableColumn value="#{fach.name}" label="Fachname"/>
+					<b:dataTableColumn value="#{fach.unterrichtssprache}" />					
+					<b:dataTableColumn value="#{fach.klasse.klasseId}" label="Klassen-Id"/>
+					<b:dataTableColumn value="#{fach.klasse.jahrgangsstufe}" />
+					<b:dataTableColumn value="#{fach.klasse.jahr}" />
+					<b:dataTableColumn value="#{fach.klasse.istAktiv? 'Ja': 'Nein'}"
+						label="Klasse ist Aktiv" />
+					<h:column style="text-align: center;">
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+
+						<b:commandButton icon-awesome="fa fa-search" look="info"
+							style="margin: 0 5px;"
+							action="#{klasseBean.prepareShow(fach.klasse.klasseId)}"
+							tooltip="Klasse anzeigen" />
+
+					</h:column>
+				</b:dataTable>
+			</b:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

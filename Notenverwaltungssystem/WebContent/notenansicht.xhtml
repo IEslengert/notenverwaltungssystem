@@ -1,0 +1,185 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+
+	<h:form id="notenAnzeigenForm">	
+		<b:panel col-md="12" look="primary"
+			rendered="#{klasseBean.schuelerKlasse != null }"
+			title="Übersicht Klasse" showCollapseLink="false">
+
+			<b:row>
+				<b:column style="margin: 5px 10px;" col-md="2">
+					<h:outputText value="Klassenlehrer:" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="3">
+					<h:outputText
+						rendered="#{klasseBean.schuelerKlasse.klasse.klassenLehrer.titel != null and not empty klasseBean.schuelerKlasse.klasse.klassenLehrer.titel}"
+						value="#{klasseBean.schuelerKlasse.klasse.klassenLehrer.anrede} &#160;&#160;&#160; #{klasseBean.schuelerKlasse.klasse.klassenLehrer.titel} &#160;&#160;&#160; #{klasseBean.schuelerKlasse.klasse.klassenLehrer.vorname} &#160;&#160;&#160; #{klasseBean.schuelerKlasse.klasse.klassenLehrer.nachname}" />
+					<h:outputText
+						rendered="#{klasseBean.schuelerKlasse.klasse.klassenLehrer.titel == null || empty klasseBean.schuelerKlasse.klasse.klassenLehrer.titel}"
+						value="#{klasseBean.schuelerKlasse.klasse.klassenLehrer.anrede} &#160;&#160;&#160; #{klasseBean.schuelerKlasse.klasse.klassenLehrer.vorname} &#160;&#160;&#160; #{klasseBean.schuelerKlasse.klasse.klassenLehrer.nachname}" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="2">
+					<h:outputText value="Status:" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="1">
+					<h:outputText value="#{klasseBean.schuelerKlasse.status}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column style="margin: 5px 10px;" col-md="2">
+					<h:outputText value="Jahrgangsstufe:" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="3">
+					<h:outputText
+						value="#{klasseBean.schuelerKlasse.klasse.jahrgangsstufe}" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="2">
+					<h:outputText value="Notendurchschnitt:" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="1">
+					<h:outputText
+						value="#{klasseBean.schuelerKlasse.notendurchschnitt}">
+						<f:convertNumber pattern="#.#" locale="de_DE" />
+					</h:outputText>
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column style="margin: 5px 10px;" col-md="2">
+					<h:outputText value="Jahr:" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="3">
+					<h:outputText value="#{klasseBean.schuelerKlasse.klasse.jahr}" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="2">
+					<h:outputText value="Bemerkung:" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="1">
+					<h:outputText value="#{klasseBean.schuelerKlasse.bemerkung}" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:column style="margin: 5px 10px;" col-md="2">
+					<h:outputText value="Klassenraum:" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="3">
+					<h:outputText
+						value="#{klasseBean.schuelerKlasse.klasse.klassenraum}" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="2"
+					rendered="#{klasseBean.schuelerKlasse.klasse.istAktiv}">
+					<h:outputText value="Versetzungsgefährdet:" />
+				</b:column>
+				<b:column style="margin: 5px 10px;" col-md="1"
+					rendered="#{klasseBean.schuelerKlasse.klasse.istAktiv}">
+					<h:outputText
+						value="#{klasseBean.schuelerKlasse.istVersetzungsgefaehrdet? 'Ja': 'Nein'}" />
+				</b:column>
+			</b:row>
+
+		</b:panel>
+		<b:panel col-md="12" look="primary"
+			rendered="#{klasseBean.schuelerKlasse != null}" title="Noten von #{klasseBean.schuelerKlasse.schueler.anrede} #{klasseBean.schuelerKlasse.schueler.vorname} #{klasseBean.schuelerKlasse.schueler.nachname}"
+			showCollapseLink="false">
+			<b:dataTable disabled="#{empty fachBean.schuelerFachListe}"
+				scrollSize="800px" scrollCollapse="true" fixedHeader="true"
+				scroll-x="false" responsive="true" lang="de" var="schuelerFach"
+				value="#{fachBean.schuelerFachListe}">
+				<b:dataTableColumn value="#{schuelerFach.fach.fachId}"
+					label="Fach-Id" />
+				<b:dataTableColumn value="#{schuelerFach.fach.name}" label="Name" />
+				<b:dataTableColumn value="#{schuelerFach.fach.unterrichtssprache}"
+					label="Unterrichtssprache" />
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Fach-Notendurchschnitt" />
+					</f:facet>
+					<h:outputText value="#{schuelerFach.fachNotendurchschnitt}">
+						<f:convertNumber pattern="#.#" locale="de_DE" />
+					</h:outputText>
+				</h:column>
+
+
+				<b:dataTableColumn value="#{schuelerFach.fach.lehrer.vorname}"
+					label="Lehrer Vorname" />
+
+				<b:dataTableColumn value="#{schuelerFach.fach.lehrer.nachname}"
+					label="Lehrer Nachname" />
+				<h:column>
+					<f:facet name="header">
+						<h:outputText />
+					</f:facet>
+					<div style="text-align: center;">
+						<b:commandButton icon-awesome="fa fa-search" look="info"
+							style="margin: 0 5px;" ajax="true" update="klausuren"
+							actionListener="#{fachBean.prepareShowKlausuren(schuelerFach)}"
+							oncomplete="$('.klausurenClass').modal();return false;"
+							tooltip="Klausuren anzeigen" />
+					</div>
+				</h:column>
+
+			</b:dataTable>
+		</b:panel>
+	</h:form>
+	<b:modal id="klausuren" title="Klausuren" styleClass="klausurenClass"
+		backdrop="false">
+		<b:panel look="primary">
+			<b:dataTable disabled="#{empty fachBean.klausurListe}"
+				scrollSize="800px" scrollCollapse="true" fixedHeader="true"
+				scroll-x="false" responsive="true" lang="de" var="klausur"
+				value="#{fachBean.klausurListe}">
+
+				<b:dataTableColumn value="#{klausur.klausurId}" label="Id" />
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Note" />
+					</f:facet>
+					<h:outputText value="#{klausur.note}">
+						<f:convertNumber pattern="#.#" locale="de_DE" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Gewichtung" />
+					</f:facet>
+					<h:outputText value="#{klausur.gewichtung}">
+						<f:convertNumber pattern="##.##" locale="de_DE" />
+					</h:outputText>
+				</h:column>
+				<b:dataTableColumn value="#{klausur.artLeistung}"
+					label="Leistungsart" />
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Punkte" />
+					</f:facet>
+					<h:outputText value="#{klausur.punkte}">
+						<f:convertNumber pattern="##.##" locale="de_DE" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Max Punkte" />
+					</f:facet>
+					<h:outputText value="#{klausur.maxPunkte}">
+						<f:convertNumber pattern="##.##" locale="de_DE" />
+					</h:outputText>
+				</h:column>
+				<b:dataTableColumn value="#{klausur.bemerkung}" label="Bemerkung"
+					style="text-align: left;" />
+			</b:dataTable>
+		</b:panel>
+		<f:facet name="footer">
+			<h:form>
+				<b:button value="Close" dismiss="modal" onclick="return false;"
+					look="danger" />
+			</h:form>
+		</f:facet>
+	</b:modal>
+
+
+
+</ui:composition>

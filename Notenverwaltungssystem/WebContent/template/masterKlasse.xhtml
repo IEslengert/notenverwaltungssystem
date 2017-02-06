@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<h:html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+	<title>Notenverwaltungssystem</title>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<script type="text/javascript">
+		var collapsed = false;
+		function updateContent() {
+			if (collapsed == false) {
+				document.getElementById("inhalt").className = "col-md-12";
+				collapsed = true;
+			} else {
+				document.getElementById("inhalt").className = "col-md-10";
+				collapsed = false;
+			}
+
+		}
+	</script>
+	<style type="text/css">
+@media ( min-width : 768px) {
+	.klausurenClass .modal-dialog {
+		width: 800px;
+	}
+}
+</style>
+</h:head>
+
+<h:body style="padding-top: 100px; padding-bottom: 120px;">
+
+	<b:navBar brand="Notenverwaltungssystem"
+		brand-style="margin-left: 55px;"
+		brandHref="eingeloggterBenutzerProfil.xhtml" inverse="true"
+		fixed="top" fluid="true">
+		<h:form rendered="#{not empty user}">
+			<button class="navbar-toggle"
+				style="display: block; float: left; position: fixed; top: 0; padding: 9px 10px; margin-top: 8px; margin-left: 0px; margin-bottom: 0px;"
+				type="button" data-toggle="collapse"
+				data-target="#exCollapsingNavbarKlassen" onclick="updateContent()"
+				aria-controls="exCollapsingNavbarKlassen" aria-expanded="true">
+				<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span
+					class="icon-bar"></span><span class="icon-bar"></span>
+			</button>
+		</h:form>
+		<b:navbarLinks>
+			<b:navLink href="eingeloggterBenutzerProfil.xhtml" value="Startseite"
+				icon="glyphicon glyphicon-home" iconSize="6"
+				style="border-left: 2px solid #7FFFD4;"></b:navLink>
+		</b:navbarLinks>
+		<ui:insert name="logoutheader">
+			<ui:include src="logoutheader.xhtml" />
+		</ui:insert>
+	</b:navBar>
+	<b:row style="padding-left: 10px;">
+		<b:column medium-screen="2" class="collapse in"
+			id="exCollapsingNavbarKlassen">
+			<ui:insert name="navigationKlasse">
+				<ui:include src="navigationKlasse.xhtml" />
+			</ui:insert>
+		</b:column>
+		<b:column id="inhalt" medium-screen="10">
+			<ui:insert name="content" />
+		</b:column>
+	</b:row>
+
+	<b:navBar brand="&copy; 2016 Notenverwaltungssystem" position="bottom"
+		sticky="false">
+		<b:navbarLinks>
+			<b:navCommandLink value="Impressum" href="impressum.xhtml" />
+			<b:navCommandLink value="Kontakt" href="kontakt.xhtml" />
+		</b:navbarLinks>
+	</b:navBar>
+</h:body>
+
+</h:html>

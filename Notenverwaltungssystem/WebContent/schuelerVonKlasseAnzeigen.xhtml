@@ -1,0 +1,75 @@
+<ui:composition template="/template/masterKlasse.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+		<b:panel col-xs="12" title="#{personBean.gefaehrdeteSchuelerAnzeige? 'Gefährdete' : ''} Schüler Anzeige" showCollapseLink="false"
+			look="primary">
+			<b:panel col-md="12" look="primary" style="padding: 5px 5px;">
+				<h:form>
+					<b:commandButton icon="glyphicon glyphicon-menu-left"
+						immediate="true" look="primary" value="Zurück"
+						action="klasseAnzeigen" tooltip="Zurück zur Klasse" />
+				</h:form>
+			</b:panel>
+			<h:form id="schuelerVonKlasseAnzeigenForm">
+				<b:panel col-md="12" look="primary" style="padding: 5px 5px;">
+
+					<b:growl allow-dismiss="true" placement-align="center"
+						placementFrom="top" styleClass="message" />
+					<b:dataTable disabled="#{empty personBean.schuelerListe}"
+						scrollSize="800px" value="#{personBean.schuelerListe}"
+						scrollCollapse="true" var="schueler" fixedHeader="true"
+						scroll-x="false" responsive="true" lang="de">
+						<b:dataTableColumn value="#{schueler.personId}" lable="Id" />
+						<b:dataTableColumn value="#{schueler.vorname}" />
+						<b:dataTableColumn value="#{schueler.nachname}" />
+						<b:dataTableColumn value="#{schueler.email}" />
+						<b:dataTableColumn value="#{schueler.sorgeberechtigter.vorname}"
+							label="SB-Vorname" />
+						<b:dataTableColumn value="#{schueler.sorgeberechtigter.nachname}"
+							label="SB-Nachname" />
+						<b:dataTableColumn value="#{schueler.sorgeberechtigter.email}"
+							label="SB-Email" />
+						<h:column>
+							<f:facet name="header">
+								<h:outputText />
+							</f:facet>
+							<div style="text-align: center;">
+								<b:commandButton icon-awesome="fa fa-search" look="info"
+									style="margin: 5px 5px;" ajax="true"
+									update="schuelerVonKlasseAnzeigen"
+									actionListener="#{personBean.prepareShowSchueler(schueler.personId)}"
+									oncomplete="$('.schuelerVonKlasseAnzeigenClass').modal();return false;"
+									tooltip="Schüler anzeigen" />
+								<b:commandButton style="cursor: pointer;margin: 5px 5px;" ajax="true"
+									action="#{fachBean.prepareShowNotenVonSchueler(schueler.personId)}"
+									icon-awesome="fa fa-list-alt" look="primary"
+									tooltip="Notenansicht" />
+							</div>
+						</h:column>
+
+					</b:dataTable>
+
+				</b:panel>
+			</h:form>
+		</b:panel>
+		<b:modal id="schuelerVonKlasseAnzeigen" title="Schüler Anzeige"
+			styleClass="schuelerVonKlasseAnzeigenClass" backdrop="false">
+			<ui:insert name="schuelerProfil">
+				<ui:include src="schuelerProfil.xhtml" />
+			</ui:insert>
+
+			<f:facet name="footer">
+				<h:form>
+					<b:button value="Close" dismiss="modal" onclick="return false;"
+						look="danger" />
+				</h:form>
+			</f:facet>
+		</b:modal>
+	</ui:define>
+
+</ui:composition>

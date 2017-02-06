@@ -1,0 +1,193 @@
+<ui:composition template="/template/masterKlasse.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+
+		<b:panel span="12" look="primary" title="Klausur erfassen"
+			showCollapseLink="false">
+			<b:panel col-md="12" look="primary" style="padding: 5px 5px;">
+
+
+				<b:column col-md="2">
+					<h:form>
+						<b:commandButton icon="glyphicon glyphicon-menu-left"
+							immediate="true" look="primary" value="Zurück"
+							action="klasseAnzeigen" tooltip="Zurück zur Klasse" />
+					</h:form>
+				</b:column>
+				<h:form>
+					<b:growl for="faecher" id="faecherM" allow-dismiss="true"
+						placement-align="center" placementFrom="top" styleClass="message" />
+					<b:column col-md="2" offset-md="5">
+						<b:selectOneMenu id="faecher" value="#{fachBean.fach}"
+							required="true" requiredMessage="Bitte ein Fach auswählen."
+							ajax="true" update="faecherM">
+							<f:ajax event="change" render="faecherM"></f:ajax>
+							<f:selectItem itemLabel="(Fach auswählen)" itemValue="" />
+							<f:selectItems value="#{fachBean.faecherListe}"
+								itemValue="#{fach}" var="fach" itemLabel="#{fach.name}" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column col-md="3" style="text-align: left;padding-right:0px">
+						<b:commandButton icon-awesome="fa fa-refresh" look="primary"
+							update="klausurErfassenForm" value="Erfassungsformular laden"
+							actionListener="#{fachBean.klausurFormularLaden}" />
+					</b:column>
+				</h:form>
+			</b:panel>
+			<h:form id="klausurErfassenForm">
+				<b:growl for="erfassen" allow-dismiss="true"
+					placement-align="center" placementFrom="top" styleClass="message" />
+				<b:panel col-md="12" look="primary" style="padding: 20px 20px;"
+					rendered="#{fachBean.klausurListe !=null and not empty fachBean.klausurListe}">
+					<b:row>
+						<b:dataTable disabled="#{empty fachBean.klausurListe}"
+							scrollSize="800px" value="#{fachBean.klausurListe}"
+							scrollCollapse="true" var="klausur" fixedHeader="true"
+							scroll-x="false" responsive="true" lang="de">
+							<b:dataTableColumn
+								value="#{klausur.schuelerFach.schueler.personId}" label="S-Id" />
+							<b:dataTableColumn
+								value="#{klausur.schuelerFach.schueler.vorname}" />
+							<b:dataTableColumn
+								value="#{klausur.schuelerFach.schueler.nachname}" />
+							<b:dataTableColumn value="#{klausur.schuelerFach.fach.name}"
+								label="Fach" />
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Note*" />
+								</f:facet>
+								<b:growl for="note" id="noteM" error-style="font-size: 12px;" />
+
+								<b:inputText id="note" style="width: 70px;"
+									converterMessage="Bitte nur Zahlen eingeben."
+									value="#{klausur.note}" required="true"
+									requiredMessage="Bitte eine Note eingeben. Für Schüler mit der ID: #{klausur.schuelerFach.schueler.personId}"
+									ajax="true" autocomplete="false" update="noteM"
+									validator-message="Es dürfen nur Kommazahlen zwischen 1 und 6 eingetragen werden.">
+									<f:convertNumber pattern="#,#" locale="de_DE" />
+									<f:validateDoubleRange maximum="6" minimum="1" />
+								</b:inputText>
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Gewichtung*" />
+								</f:facet>
+
+								<b:growl for="gewichtung" id="gewichtungM"
+									error-style="font-size: 12px;" />
+
+								<b:inputText id="gewichtung" style="width: 70px;"
+									converterMessage="Bitte nur Zahlen eingeben."
+									value="#{klausur.gewichtung}" required="true"
+									requiredMessage="Bitte die Gewichtung der Note eingeben. Für Schüler mit der ID: #{klausur.schuelerFach.schueler.personId}"
+									ajax="true" autocomplete="false" update="gewichtungM"
+									validator-message="Keine negative Gewichtung erlaubt.">
+									<f:convertNumber pattern="##,##" locale="de_DE" />
+									<f:validateDoubleRange minimum="0" />
+								</b:inputText>
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Leistungsart" />
+								</f:facet>
+
+								<b:growl for="leistungsart" id="leistungsartM"
+									error-style="font-size: 12px;" />
+
+								<b:inputText placeholder="Leistungsart" id="leistungsart"
+									style="width: 120px;" value="#{klausur.artLeistung}"
+									ajax="true" autocomplete="false" update="leistungsartM" />
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Punkte" />
+								</f:facet>
+
+								<b:growl for="punkte" id="punkteM"
+									error-style="font-size: 12px;" />
+
+								<b:inputText id="punkte" style="width: 70px;"
+									converterMessage="Bitte nur Zahlen eingeben."
+									value="#{klausur.punkte}" ajax="true" autocomplete="false"
+									update="punkteM"
+									validator-message="Keine negativen Punkte erlaubt.">
+									<f:convertNumber pattern="##,##" locale="de_DE" />
+									<f:validateDoubleRange minimum="0" />
+								</b:inputText>
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Max Punkte" />
+								</f:facet>
+
+								<b:growl for="maxPunkte" id="maxPunkteM"
+									error-style="font-size: 12px;" />
+
+								<b:inputText id="maxPunkte" style="width: 70px;"
+									converterMessage="Bitte nur Zahlen eingeben."
+									value="#{klausur.maxPunkte}" ajax="true" autocomplete="false"
+									update="maxPunkteM"
+									validator-message="Keine negative Gewichtung erlaubt.">
+									<f:convertNumber pattern="##,##" locale="de_DE" />
+									<f:validateDoubleRange minimum="0" />
+								</b:inputText>
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText value="Bemerkung" />
+								</f:facet>
+
+								<b:growl for="bemerkung" id="bemerkungM"
+									error-style="font-size: 12px;" />
+
+								<b:inputText placeholder="Bemerkung" id="bemerkung"
+									style="width: 250px;" value="#{klausur.bemerkung}" ajax="true"
+									autocomplete="false" update="bemerkungM" />
+
+							</h:column>
+							<h:column>
+								<f:facet name="header">
+									<h:outputText />
+								</f:facet>
+								<div style="text-align: center;">
+									<b:commandButton look="danger" ajax="true"
+										action="#{fachBean.schuelerAusKlausurListeEntfernen(klausur.schuelerFach.schueler.personId)}"
+										icon="glyphicon glyphicon-remove" immediate="true"
+										tooltip="Schüler aus der Klausur entfernen (Alle Noten,Gewichtungen,Punkte und Max Punkte werden zurückgesetzt)."
+										update="klausurErfassenForm" />
+								</div>
+							</h:column>
+						</b:dataTable>
+					</b:row>
+					<b:row style="margin-top: 40px;">
+						<b:column medium-screen="10" style-class="message">
+							<h:outputText value="* Pflichtfeld"
+								style="font-size:10px;float: left;" />
+						</b:column>
+						<b:column style="text-align: right;" medium-screen="2">
+							<b:commandButton look="success" value="Klausur erfassen"
+								icon="glyphicon glyphicon-ok" id="erfassen" ajax="true"
+								actionListener="#{fachBean.createKlausur}"
+								update="klausurErfassenForm" />
+						</b:column>
+					</b:row>
+
+
+				</b:panel>
+			</h:form>
+
+		</b:panel>
+
+	</ui:define>
+
+</ui:composition>

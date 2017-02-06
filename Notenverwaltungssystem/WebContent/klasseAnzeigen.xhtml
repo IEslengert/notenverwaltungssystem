@@ -1,0 +1,120 @@
+<ui:composition template="/template/masterKlasse.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+
+		<b:panel col-md="12" look="primary">
+			<b:panel col-md="12" look="primary">
+				<h:form>
+					<b:commandButton icon-awesome="fa fa-refresh" look="info"
+						action="klasseAnzeigen" style="float:right;"
+						tooltip="Klasse aktualisieren" />
+				</h:form>
+			</b:panel>
+			<b:panel col-md="12" look="primary" title="Klasseübersicht"
+				showCollapseLink="false">
+				<b:row>
+					<b:column style="margin: 5px 10px;" col-md="2">
+						<h:outputText value="Klassenlehrer:" />
+					</b:column>
+					<b:column style="margin: 5px 10px;" col-md="5">
+						<h:outputText
+							rendered="#{klasseBean.klasse.klassenLehrer.titel != null and not empty klasseBean.klasse.klassenLehrer.titel}"
+							value="#{klasseBean.klasse.klassenLehrer.anrede} &#160;&#160;&#160; #{klasseBean.klasse.klassenLehrer.titel} &#160;&#160;&#160; #{klasseBean.klasse.klassenLehrer.vorname} &#160;&#160;&#160; #{klasseBean.klasse.klassenLehrer.nachname}" />
+
+						<h:outputText
+							rendered="#{klasseBean.klasse.klassenLehrer.titel == null || empty klasseBean.klasse.klassenLehrer.titel}"
+							value="#{klasseBean.klasse.klassenLehrer.anrede} &#160;&#160;&#160; #{klasseBean.klasse.klassenLehrer.vorname} &#160;&#160;&#160; #{klasseBean.klasse.klassenLehrer.nachname}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;" col-md="2">
+						<h:outputText value="Jahrgangsstufe:" />
+					</b:column>
+					<b:column style="margin: 5px 10px;" col-md="1">
+						<h:outputText value="#{klasseBean.klasse.jahrgangsstufe}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;" col-md="2">
+						<h:outputText value="Jahr:" />
+					</b:column>
+					<b:column style="margin: 5px 10px;" col-md="1">
+						<h:outputText value="#{klasseBean.klasse.jahr}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;" col-md="2">
+						<h:outputText value="Klassenraum:" />
+					</b:column>
+					<b:column style="margin: 5px 10px;" col-md="1">
+						<h:outputText value="#{klasseBean.klasse.klassenraum}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;" col-md="2">
+						<h:outputText value="Ist Aktiv:" />
+					</b:column>
+					<b:column style="margin: 5px 10px;" col-md="1">
+						<h:outputText value="#{klasseBean.klasse.istAktiv? 'Ja': 'Nein'}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;" col-md="2">
+						<h:outputText value="Maximale Klassen Größe:" />
+					</b:column>
+					<b:column style="margin: 5px 10px;" col-md="1">
+						<h:outputText value="#{klasseBean.klasse.maxKlassenGroesse}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;" col-md="2">
+						<h:outputText value="Schüler in Klasse:" />
+					</b:column>
+					<b:column style="margin: 5px 10px;" col-md="1">
+						<h:outputText value="#{klasseBean.klassenGroesseByKlasse}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;" col-md="2">
+						<h:outputText value="Gefährdete Schüler in Klasse:" />
+					</b:column>
+					<b:column style="margin: 5px 10px;" col-md="1">
+						<h:outputText
+							value="#{klasseBean.azahlGefaehrdeteSchuelerByKlasse}" />
+					</b:column>
+				</b:row>
+			</b:panel>
+			<b:panel col-md="12" look="primary" title="Konferenzen">
+				<b:row style="padding: 20px 20px;">
+					<b:dataTable disabled="#{empty klasseBean.konferenzenListe}"
+						scrollSize="800px" value="#{klasseBean.konferenzenListe}"
+						scrollCollapse="true" var="konferenz" fixedHeader="true"
+						scroll-x="false" responsive="true" lang="de">
+						<b:dataTableColumn value="#{konferenz.konferenzId}" label="Id" />
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="Datum" />
+							</f:facet>
+							<h:outputText value="#{konferenz.datum}">
+								<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+							</h:outputText>
+						</h:column>
+						<b:dataTableColumn value="#{konferenz.raum}" />						
+						<b:dataTableColumn value="#{konferenz.bisUhrzeit}" label="Von" />
+						<b:dataTableColumn value="#{konferenz.vonUhrzeit}" label="Bis" />
+						<b:dataTableColumn value="#{konferenz.nachricht}"
+							style="text-align:left" />
+
+					</b:dataTable>
+				</b:row>
+			</b:panel>
+		</b:panel>
+
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,66 @@
+<ui:composition template="/template/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+		<b:container layout="fluid">
+			<h:form id="loginForm"
+				style="margin: 0 auto;max-width: 400px;padding: 15px;">
+				<b:panel style="border-color: #222;">
+					<b:growl for="login" allow-dismiss="true" placement-align="center"
+						placementFrom="top" />
+					<b:row>
+						<b:column span="3" offset="4">
+							<h1>Login</h1>
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px;margin-bottom: 10px;">
+						<b:column span="10" offset="1" style-class="message">
+							<b:message for="loginName" id="loginNameM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="10" offset="1">
+							<b:inputText placeholder="Benutzernamen" id="loginName"
+								value="#{authentifizierungBean.loginName}" required="true"
+								requiredMessage="Bitte einen Benutzernamen eingeben."
+								ajax="true" autocomplete="false" update="loginNameM">
+								<f:facet name="prepend">
+									<b:icon name="user" />
+								</f:facet>
+							</b:inputText>
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 10px;margin-bottom: 10px;">
+						<b:column span="10" offset="1" style-class="message">
+							<b:message for="passwort" id="passwortM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="10" offset="1">
+							<b:inputSecret placeholder="Passwort" id="passwort"
+								value="#{authentifizierungBean.passwort}" required="true"
+								requiredMessage="Bitte ein Passwort eingeben." ajax="true"
+								autocomplete="false" update="passwortM">
+								<f:facet name="prepend">
+									<b:iconAwesome name="key" />
+								</f:facet>
+							</b:inputSecret>
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px;">
+						<b:column span="4" offset="7">
+							<b:commandButton id="login" value="login"
+								action="#{authentifizierungBean.login}" update="@form"
+								look="default btn-block" icon="log-in" style="width:100%" />
+						</b:column>
+					</b:row>
+				</b:panel>
+			</h:form>
+		</b:container>
+	</ui:define>
+
+</ui:composition>

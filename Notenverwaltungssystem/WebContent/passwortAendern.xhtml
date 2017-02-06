@@ -1,0 +1,106 @@
+<ui:composition template="/template/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+		<b:container layout="fluid">
+			<h:form id="passwortAendernForm"
+				style="margin: 0 auto;max-width: 600px;padding: 15px;">
+				<b:panel style="border-color: #222;">
+					<b:row>
+						<b:column span="10" offset="2">
+							<h1>Passwort ändern</h1>
+						</b:column>
+					</b:row>
+					<b:row span="12" >
+						<b:column >
+							<b:growl for="passwortAendern" allow-dismiss="true" placement-align="center" placementFrom="top"/>
+						</b:column>
+					</b:row>
+					<b:row span="12">
+						<b:alert severity="info" closable="true" 
+							style="text-align:center;"
+							title="Bitte ändern Sie das Passwort vor dem ersten Login." />
+					</b:row>
+					<b:row style="margin-top: 40px;margin-bottom: 10px;">
+						<b:column medium-screen="6" offset="5" style-class="message">
+							<b:message for="aktuellesPasswort" id="aktuellesPasswortM"/>
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="4" offset="1">
+							<h:outputText value="Aktuelles Passwort:" />
+						</b:column>
+						<b:column medium-screen="6">
+							<b:inputSecret placeholder="Aktuelles Passwort"
+								id="aktuellesPasswort" value="#{authentifizierungBean.passwort}"
+								required="true"
+								requiredMessage="Bitte das aktuelle Passwort eingeben."
+								ajax="true" autocomplete="false" update="aktuellesPasswortM">
+								<f:facet name="prepend">
+									<b:iconAwesome name="key" />
+								</f:facet>
+							</b:inputSecret>
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 10px;margin-bottom: 10px;">
+						<b:column medium-screen="6" offset="5" style-class="message">
+							<b:message for="neuesPasswort" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="4" offset="1">
+							<h:outputText value="Neues Passwort:" />
+						</b:column>
+						<b:column medium-screen="6">
+							<b:inputSecret placeholder="Neues Passwort" id="neuesPasswort"
+								value="#{authentifizierungBean.neuesPasswort}" required="true"
+								requiredMessage="Bitte ein neues Passwort eingeben." ajax="true"
+								autocomplete="false" update="@(.message)">
+								<f:validator validatorId="passwortValidator" />
+								<f:attribute name="confirmPasswort" value="#{confirmPasswort}" />
+								<f:facet name="prepend">
+									<b:iconAwesome name="key" />
+								</f:facet>
+							</b:inputSecret>
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 10px;margin-bottom: 10px;">
+						<b:column medium-screen="6" offset="5" style-class="message">
+							<b:message for="confirmPasswort" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="4" offset="1">
+							<h:outputText value="Neues Passwort bestätigen:" />
+						</b:column>
+						<b:column medium-screen="6">
+							<b:inputSecret placeholder="Neues Passwort bestätigen"
+								id="confirmPasswort" binding="#{confirmPasswort}"
+								required="true"
+								requiredMessage="Bitte das neue Passwort bestätigen."
+								ajax="true" autocomplete="false" update="@(.message)">
+								<f:facet name="prepend">
+									<b:iconAwesome name="key" />
+								</f:facet>
+							</b:inputSecret>
+						</b:column>
+					</b:row>
+
+					<b:row style="margin-top: 40px;">
+						<b:column span="5" offset="6">
+							<b:commandButton id="passwortAendern" value="Passwort Ändern"
+								action="#{authentifizierungBean.updatePasswort}" update="@form"
+								look="primary btn-block" icon-awesome="fa fa-pencil" style="width:100%" />
+						</b:column>
+					</b:row>
+				</b:panel>
+			</h:form>
+		</b:container>
+
+	</ui:define>
+
+</ui:composition>

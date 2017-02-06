@@ -1,0 +1,119 @@
+<ui:composition template="template/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+		<b:container layout="fluid">
+			<h:form id="kontakt"
+				style="margin: 0 auto;max-width: 600px;padding: 15px;">
+
+				<b:panel title="Kontakt" look="primary" showCollapseLink='false'
+					collapsible="false">
+					<b:growl for="send" allow-dismiss="true" placement-align="center"
+						placementFrom="top" />
+					<b:row style="margin-top: 20px;margin-bottom: 10px;">
+						<b:column span="7" offset="2" style-class="message">
+							<b:message for="name" id="nameM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Name*:" />
+						</b:column>
+						<b:column medium-screen="5">
+							<b:inputText placeholder="Name" id="name"
+								value="#{mailBean.senderName}" required="true"
+								requiredMessage="Bitte Ihren Namen eingeben." ajax="true"
+								autocomplete="false" update="nameM" />
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px;margin-bottom: 10px;">
+						<b:column span="7" offset="2" style-class="message">
+							<b:message for="email" id="emailM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="E-Mail Adresse*:" />
+						</b:column>
+						<b:column medium-screen="5">
+							<b:inputText placeholder="E-Mail Adresse" id="email"
+								value="#{mailBean.senderEmail}" required="true"
+								requiredMessage="Bitte eine E-mail Adresse eingeben."
+								ajax="true" autocomplete="false"
+								validatorMessage="Ungültiges E-Mail Format!" update="emailM">
+								<f:validateRegex
+									pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							</b:inputText>
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px;margin-bottom: 10px;">
+						<b:column span="7" offset="2" style-class="message">
+							<b:message for="betreff" id="betreffM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Betreff*:" />
+						</b:column>
+						<b:column medium-screen="5">
+							<b:inputText placeholder="Betreff" id="betreff"
+								value="#{mailBean.betreff}" required="true"
+								requiredMessage="Bitte einen Benutzernamen eingeben."
+								ajax="true" autocomplete="false" update="betreffM">
+							</b:inputText>
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px;margin-bottom: 10px;">
+						<b:column span="7" offset="2" style-class="message">
+							<b:message id="inhaltMessage" for="nachricht" />
+						</b:column>
+					</b:row>
+					<b:row>
+
+						<b:column medium-screen="2">
+							<h:outputText value="Nachricht*:" />
+						</b:column>
+						<p:panel style="border: 0;">
+							<b:column medium-screen="10">
+								<p:inputTextarea id="nachricht" styleClass="col-xs-12" rows="10"
+									style="background: none #ffffff;font-size: 14px;color: #666;"
+									cols="12" value="#{mailBean.inhalt}" required="true"
+									requiredMessage="Bitte einen Text eingeben!" counter="display"
+									maxlength="600" size="600" autoResize="false"
+									counterTemplate="{0} verbleibende Zeichen.">
+									<f:ajax event="keyup" render="inhaltMessage" />
+								</p:inputTextarea>
+								<p:watermark for="nachricht" value="Nachrichtentext" />
+							</b:column>
+						</p:panel>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="5" offset="2">
+							<h:outputText id="display" />
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px;margin-bottom: 12px;">
+						<b:column medium-screen="3" style-class="message">
+							<h:outputText value="* Pflichtfeld"
+								style="font-size:10px;float: left;" />
+
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column span="4" offset="8">
+							<b:commandButton id="send" value="Absenden"
+								actionListener="#{mailBean.sendKontaktMail}" update="@form"
+								look="primary btn-block" icon="envelope" />
+						</b:column>
+					</b:row>
+
+				</b:panel>
+			</h:form>
+		</b:container>
+	</ui:define>
+
+</ui:composition>

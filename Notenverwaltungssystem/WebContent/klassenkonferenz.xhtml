@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="klassenkonferenzForm">
+		<b:message for="confirm" />
+		<b:row style="margin-top: 20px;margin-bottom: 10px;">
+			<b:column span="5" offset="2" style-class="message">
+				<b:message for="datum" id="datumM" />
+			</b:column>
+		</b:row>
+		<b:row>
+			<b:column medium-screen="2">
+				<h:outputText value="Datum*:" />
+			</b:column>
+			<b:column medium-screen="5">
+				<b:datepicker id="datum" value="#{klasseBean.konferenz.datum}"
+					lang="de" showButtonPanel="true"
+					requiredMessage="Bitte ein Datum eingeben." required="true"
+					changeMonth="true" changeYear="true" showWeek="true"
+					mode="popup-icon">
+					<f:ajax event="click" render="datumMessage" />
+				</b:datepicker>
+			</b:column>
+		</b:row>
+		<b:row style="margin-top: 20px;margin-bottom: 10px;">
+			<b:column span="5" offset="2" style-class="message">
+				<b:message for="raum" id="raumM" />
+			</b:column>
+		</b:row>
+		<b:row>
+			<b:column medium-screen="2">
+				<h:outputText value="Raum*:" />
+			</b:column>
+			<b:column medium-screen="5">
+				<b:inputText placeholder="Raum" id="raum"
+					value="#{klasseBean.konferenz.raum}" ajax="true"
+					requiredMessage="Bitte einen Raum eingeben." required="true"
+					autocomplete="true" update="raumM" />
+			</b:column>
+		</b:row>
+		<b:row style="margin-top: 20px;margin-bottom: 10px;">
+			<b:column span="5" offset="2" style-class="message">
+				<b:message for="vonUhrzeit" id="vonUhrzeitM" />
+			</b:column>
+		</b:row>
+		<b:row>
+			<b:column medium-screen="2">
+				<h:outputText value="Von*:" />
+			</b:column>
+			<b:column medium-screen="5">
+				<p:inputMask id="vonUhrzeit"
+					requiredMessage="Bitte eine von Uhrzeit eingeben." required="true"
+					value="#{klasseBean.konferenz.vonUhrzeit}" mask="99:99"
+					style="background: none #ffffff;font-size: 14px;color: #666; height: 38px;"
+					validatorMessage="Ungültige Uhrzeit">
+					<f:ajax event="change" render="vonUhrzeitM" />
+					<f:validateRegex pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" />
+				</p:inputMask>
+				<p:watermark for="vonUhrzeit" value="Von Uhrzeit" />
+			</b:column>
+		</b:row>
+		<b:row style="margin-top: 20px;margin-bottom: 10px;">
+			<b:column span="5" offset="2" style-class="message">
+				<b:message for="bisUhrzeit" id="bisUhrzeitM" />
+			</b:column>
+		</b:row>
+		<b:row>
+			<b:column medium-screen="2">
+				<h:outputText value="Bis*:" />
+			</b:column>
+			<b:column medium-screen="5">
+				<p:inputMask id="bisUhrzeit"
+					requiredMessage="Bitte eine bis Uhrzeit eingeben." required="true"
+					value="#{klasseBean.konferenz.bisUhrzeit}" mask="99:99"
+					style="background: none #ffffff;font-size: 14px;color: #666; height: 38px;"
+					validatorMessage="Ungültige Uhrzeit">
+					<f:ajax event="change" render="bisUhrzeitM" />
+					<f:validateRegex pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" />
+				</p:inputMask>
+				<p:watermark for="bisUhrzeit" value="Bis Uhrzeit" />
+
+
+			</b:column>
+		</b:row>
+		<b:row style="margin-top: 20px;margin-bottom: 10px;">
+			<b:column span="5" offset="2" style-class="message">
+				<b:message for="nachricht" id="nachrichtM" />
+			</b:column>
+		</b:row>
+		<b:row>
+			<b:column medium-screen="2">
+				<h:outputText value="Nachricht*:" />
+			</b:column>
+			<p:panel style="border: 0;">
+				<b:column medium-screen="10">
+					<p:inputTextarea id="nachricht" styleClass="col-xs-12"
+						requiredMessage="Bitte eine Nachricht eingeben." required="true"
+						style="background: none #ffffff;font-size: 14px;color: #666;" rows="10" cols="14"
+						value="#{klasseBean.konferenz.nachricht}" counter="display"
+						maxlength="1200" size="1200" autoResize="false"
+						counterTemplate="{0} verbleibende Zeichen.">
+						<f:ajax event="keyup" render="nachrichtM" />
+					</p:inputTextarea>
+					<p:watermark for="nachricht" value="Nachricht" />
+				</b:column>
+			</p:panel>
+		</b:row>
+		<b:row>
+			<b:column medium-screen="5" offset="2">
+				<h:outputText id="display" />
+			</b:column>
+		</b:row>
+		<b:row style="margin-top: 40px;">
+			<b:column medium-screen="6" style-class="message">
+				<h:outputText value="* Pflichtfeld"
+					style="font-size:10px;float: left;" />
+			</b:column>
+			<b:column medium-screen="6">
+				<b:commandButton value="Klassenkonferenz einberufen" id="confirm"
+					actionListener="#{klasseBean.klassenkonferenzEinberufen}"
+					update="klassenkonferenzForm" ajax="true" look="primary btn-block"
+					iconAwesome="fa fa-bullhorn" />
+			</b:column>
+		</b:row>
+	</h:form>
+</ui:composition>

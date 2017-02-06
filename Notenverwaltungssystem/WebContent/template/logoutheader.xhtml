@@ -1,0 +1,14 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form rendered="#{not empty user}"
+		styleClass="navbar-form navbar-right">
+
+		<b:commandButton value="Logout"
+			action="#{authentifizierungBean.logout}"
+			look="default btn-block" icon="log-out" />
+	</h:form>
+</ui:composition>

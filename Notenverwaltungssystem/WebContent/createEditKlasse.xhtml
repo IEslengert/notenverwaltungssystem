@@ -1,0 +1,176 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+
+
+		<b:panel col-xs="12"
+			title="#{!klasseBean.wirdEditiert? 'Klasse anlegen' : 'Klasse  editieren'}"
+			showCollapseLink='false' look="primary">
+			<b:panel col-md="12" look="primary" rendered="#{klasseBean.wirdEditiert}">
+				<h:form>
+					<b:commandButton icon="glyphicon glyphicon-menu-left"
+						immediate="true" look="primary" style="margin: 0 5px;float: left"
+						value="Zurück" action="#{klasseBean.prepareList}"
+						tooltip="Zurück zur Klassen Anzeige" />
+				</h:form>
+			</b:panel>
+			<b:panel col-md="12" look="primary" id="createEditKlassePanel">
+				<h:form>
+					<b:row style="margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="klassenLehrer" id="klassenLehrerM" />
+						</b:column>
+
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Klassenlehrer:" />
+						</b:column>
+						<b:column medium-screen="2">
+
+							<p:selectOneMenu id="klassenLehrer"
+								style="width: 100%;height: 38px"
+								value="#{klasseBean.klasse.klassenLehrer}" var="lehrer"
+								filter="true" filterMatchMode="contains"
+								converter="benutzerConverter">
+								<f:ajax event="change" render="klassenLehrerM"></f:ajax>
+								<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
+								<f:selectItems value="#{personBean.lehrerListe}"
+									itemValue="#{lehrer2}"
+									itemLabel="#{lehrer2.personId} #{lehrer2.personalNr} #{lehrer2.vorname} #{lehrer2.nachname}"
+									var="lehrer2" />
+								<p:column>
+									<h:outputText value="#{lehrer.personId}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{lehrer.personalNr}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{lehrer.vorname}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{lehrer.nachname}" />
+								</p:column>
+							</p:selectOneMenu>
+
+						</b:column>
+					</b:row>
+				</h:form>
+				<h:form id="createEditKlasse">
+					<b:growl allow-dismiss="true" placement-align="center"
+						placementFrom="top" />
+					<b:row style="margin-top: 20px;margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="jahrgangsstufe" id="jahrgangsstufeM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Jahrgangsstufe*:" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:inputText placeholder="Jahrgangsstufe" id="jahrgangsstufe"
+								disabled="#{klasseBean.wirdEditiert}" ajax="true"
+								value="#{klasseBean.klasse.jahrgangsstufe}" required="true"
+								requiredMessage="Bitte eine Jahrgangsstufe eingeben."
+								autocomplete="true" update="jahrgangsstufeM" />
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 20px;margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="jahr" id="jahrM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Jahr*:" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:inputText placeholder="Jahr" id="jahr"
+								disabled="#{klasseBean.wirdEditiert}"
+								value="#{klasseBean.klasse.jahr}" required="true"
+								requiredMessage="Bitte ein Jahr eingeben." ajax="true"
+								autocomplete="true" update="jahrM"
+								converterMessage="Bitte nur Zahlen eingeben." />
+						</b:column>
+					</b:row>
+
+					<b:row style="margin-top: 20px;margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="klassenraum" id="klassenraumM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Klassenraum:" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:inputText placeholder="Klassenraum" id="klassenraum"
+								value="#{klasseBean.klasse.klassenraum}" ajax="true"
+								autocomplete="true" update="klassenraumM" />
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 20px;margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="maxKlassenGroesse" id="maxKlassenGroesseM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Klassengröße*:" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:inputText placeholder="maxKlassenGroesse"
+								disabled="#{klasseBean.wirdEditiert}" id="maxKlassenGroesse"
+								required="true"
+								requiredMessage="Bitte die Klassengröße eingeben."
+								converterMessage="Bitte nur Zahlen eingeben."
+								value="#{klasseBean.klasse.maxKlassenGroesse}" ajax="true"
+								autocomplete="true" update="maxKlassenGroesseM" />
+						</b:column>
+					</b:row>
+
+					<b:row style="margin-top: 20px;margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="istAktiv" id="istAktivM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Ist Aktiv:" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:selectBooleanCheckbox id="istAktiv"
+								value="#{klasseBean.klasse.istAktiv}" />
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px;">
+						<b:column medium-screen="5" style-class="message">
+							<h:outputText value="* Pflichtfeld"
+								style="font-size:10px;float: left;" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:commandButton id="create" value="Klasse erstellen"
+								rendered="#{!klasseBean.wirdEditiert}"
+								actionListener="#{klasseBean.createKlasse}"
+								update="createEditKlassePanel" ajax="true"
+								look="primary btn-block" icon="glyphicon glyphicon-plus" />
+							<b:commandButton id="edit" value="Klasse editieren"
+								rendered="#{klasseBean.wirdEditiert}"
+								actionListener="#{klasseBean.editKlasse}"
+								update="createEditKlassePanel" ajax="true"
+								look="primary btn-block" icon-awesome="fa fa-pencil" />
+						</b:column>
+					</b:row>
+				</h:form>
+			</b:panel>
+		</b:panel>
+
+	</ui:define>
+
+</ui:composition>

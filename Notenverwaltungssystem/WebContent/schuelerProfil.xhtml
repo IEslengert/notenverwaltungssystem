@@ -1,0 +1,142 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+	<b:panel look="primary" showCollapseLink="false" title="Schüler Profil">
+		<b:tabView activeIndex="0" styleClass="col-xs-12"
+			contentStyle="border-top: 1px solid #ddd;border-right: 1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding:10px"
+			style="margin-bottom: 30px;">
+
+			<b:tab title="Personenbezogene Daten">
+				<h:form>
+					<b:row>
+						<b:column style="margin: 10px 10px;text-align: center;" span="4">
+							<p:graphicImage id="schuelerImage"
+								style="width: 12em;height:12em;"
+								rendered="#{!(personBean.schueler.profilBild == null)}"
+								value="#{personBean.schuelerProfilBild}" />
+							<p:graphicImage
+								rendered="#{(personBean.schueler.profilBild == null)}"
+								value="resources/images/leeresProfilBild.png"
+								style="width: 12em;height:12em;" />
+						</b:column>
+						<b:column span="7">
+							<b:row>
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="Name:" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column style="margin: 5px 10px;">
+									<h:outputText
+										value="#{personBean.schueler.anrede} &#160; #{personBean.schueler.vorname} &#160; #{personBean.schueler.nachname}" />
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="Geburtstag:" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="#{personBean.schueler.geburtstag}">
+										<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+									</h:outputText>
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="Email:" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column style="margin: 5px 10px;word-break:break-all;word-wrap:break-word">
+									<h:outputText value="#{personBean.schueler.email}" />
+								</b:column>
+							</b:row>
+							<b:row
+								rendered="#{personBean.schueler.telefonnummer != null and not empty personBean.schueler.telefonnummer}">
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="Telefonnummer:" />
+								</b:column>
+							</b:row>
+							<b:row
+								rendered="#{personBean.schueler.telefonnummer != null and not empty personBean.schueler.telefonnummer}">
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="#{personBean.schueler.telefonnummer}" />
+								</b:column>
+							</b:row>
+							<b:row
+								rendered="#{personBean.schueler.religion != null and not empty personBean.schueler.religion}">
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="Religion:" />
+								</b:column>
+							</b:row>
+							<b:row
+								rendered="#{personBean.schueler.religion != null and not empty personBean.schueler.religion}">
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="#{personBean.schueler.religion}" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="Adresse:" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column style="margin: 5px 10px;">
+									<h:outputText
+										value="#{personBean.schueler.adresse.strasse} &#160; #{personBean.schueler.adresse.hausnummer}" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column style="margin: 5px 10px;">
+									<h:outputText
+										value="#{personBean.schueler.adresse.plz} &#160; #{personBean.schueler.adresse.ort}" />
+								</b:column>
+
+							</b:row>
+							<b:row
+								rendered="#{personBean.schueler.letzteEinschreibung != null}">
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="Letzte Einschreibung:" />
+								</b:column>
+							</b:row>
+							<b:row
+								rendered="#{personBean.schueler.letzteEinschreibung != null}">
+								<b:column style="margin: 5px 10px;">
+									<h:outputText
+										value="#{personBean.schueler.letzteEinschreibung}">
+										<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+									</h:outputText>
+								</b:column>
+							</b:row>
+							<b:row
+								rendered="#{personBean.schueler.besonderheit != null and not empty personBean.schueler.besonderheit}">
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="Besonderheit:" />
+								</b:column>
+							</b:row>
+							<b:row
+								rendered="#{personBean.schueler.besonderheit != null and not empty personBean.schueler.besonderheit}">
+								<b:column style="margin: 5px 10px;">
+									<h:outputText value="#{personBean.schueler.besonderheit}" />
+								</b:column>
+							</b:row>
+						</b:column>
+					</b:row>
+				</h:form>
+			</b:tab>
+			<b:tab title="Sorgeberechtigter">
+				<ui:insert name="sorgeberechtigter">
+					<ui:include src="sorgeberechtigter.xhtml" />
+				</ui:insert>
+			</b:tab>			
+		</b:tabView>
+	</b:panel>
+
+</ui:composition>

@@ -1,0 +1,511 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+
+		<b:panel col-xs="12"
+			title="#{!personBean.wirdEditiert? 'Schüler anlegen' : 'Schüler editieren'}"
+			showCollapseLink="false" look="primary">
+			<b:panel col-md="12" look="primary"
+				rendered="#{personBean.wirdEditiert}">
+				<h:form>
+					<b:commandButton icon="glyphicon glyphicon-menu-left"
+						immediate="true" look="primary" style="margin: 0 5px;float: left"
+						value="Zurück" action="#{personBean.prepareListSchueler}"
+						tooltip="Zurück zur Schueler Anzeige" />
+				</h:form>
+			</b:panel>
+			<b:panel col-md="12" look="primary">
+				<h:form id="createEditSchueler">
+					<b:growl allow-dismiss="true" placement-align="center"
+						placementFrom="top" />
+					<b:tabView activeIndex="0" styleClass="col-xs-12"
+						contentStyle="border-top: 1px solid #ddd;border-right: 1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;padding:10px"
+						style="margin-bottom: 30px;">
+
+						<b:tab title="Personenbezogene Daten">
+
+							<b:row style="margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="anrede" id="anredeM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Anrede*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:selectOneMenu id="anrede"
+										value="#{personBean.schueler.anrede}" required="true"
+										requiredMessage="Bitte ein Anrede auswählen." ajax="true"
+										update="anredeM">
+										<f:ajax event="change" render="anredeM"></f:ajax>
+										<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
+										<f:selectItems value="#{personBean.anredeValues}" />
+									</b:selectOneMenu>
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="vorname" id="vornameM" />
+									<b:growl for="vorname" allow-dismiss="true"
+										placement-align="center" placementFrom="top" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Vorname*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Vorname" id="vorname"
+										value="#{personBean.schueler.vorname}" required="true"
+										requiredMessage="Bitte einen Vornamen eingeben." ajax="true"
+										autocomplete="true" update="vornameM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="nachname" id="nachnameM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Nachname*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Nachname" id="nachname"
+										value="#{personBean.schueler.nachname}" required="true"
+										requiredMessage="Bitte einen Nachname eingeben." ajax="true"
+										autocomplete="true" update="nachnameM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message id="geburtstagMessage" for="geburtstag" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Gebutsdatum*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:datepicker id="geburtstag"
+										value="#{personBean.schueler.geburtstag}" lang="de"
+										showButtonPanel="true" style-class="bf-error"
+										requiredMessage="Bitte ein Gebutsdatum eingeben."
+										required="true" changeMonth="true" changeYear="true"
+										showWeek="true" mode="popup-icon">
+										<f:ajax event="click" render="geburtstagMessage" />
+									</b:datepicker>
+
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="email" id="emailM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="E-Mail Adresse*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="E-Mail Adresse" id="email"
+										disabled="#{personBean.wirdEditiert}"
+										value="#{personBean.schueler.email}" required="true"
+										requiredMessage="Bitte eine E-mail Adresse eingeben."
+										ajax="true" autocomplete="true"
+										validatorMessage="Ungültiges E-Mail Format!" update="emailM">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</b:inputText>
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message id="telefonnummerMessage" for="telefonnummer" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Telefonnummer:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Telefonnummer" id="telefonnummer"
+										value="#{personBean.schueler.telefonnummer}" ajax="true"
+										autocomplete="true" update="telefonnummerMessage" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="strasse" id="strasseM" />
+								</b:column>
+								<b:column span="3" style-class="message">
+									<b:message for="hausnummer" id="hausnummerM" />
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Straße/Hausnummer*:" />
+								</b:column>
+								<b:column medium-screen="3">
+									<b:inputText placeholder="Straße" id="strasse"
+										value="#{personBean.schueler.adresse.strasse}" required="true"
+										requiredMessage="Bitte eine Straße eingeben." ajax="true"
+										autocomplete="false" update="strasseM" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Hausnummer" id="hausnummer"
+										value="#{personBean.schueler.adresse.hausnummer}"
+										required="true"
+										requiredMessage="Bitte eine Hausnummer eingeben." ajax="true"
+										autocomplete="true" update="hausnummerM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="ort" id="ortM" />
+								</b:column>
+								<b:column span="3" style-class="message">
+									<b:message for="plz" id="plzM" />
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Ort/PLZ*:" />
+								</b:column>
+								<b:column medium-screen="3">
+									<b:inputText placeholder="Ort" id="ort"
+										value="#{personBean.schueler.adresse.ort}" required="true"
+										requiredMessage="Bitte einen Ort eingeben." ajax="true"
+										autocomplete="true" update="ortM" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="PLZ" id="plz"
+										value="#{personBean.schueler.adresse.plz}" required="true"
+										requiredMessage="Bitte eine PLZ eingeben." ajax="true"
+										autocomplete="true" update="plzM" />
+								</b:column>
+							</b:row>
+
+						</b:tab>
+						<b:tab title="Benutzerbezogene Daten">
+
+							<b:row style="margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="loginName" id="loginNameM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Login-Name*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Login-Name" id="loginName"
+										disabled="#{personBean.wirdEditiert}"
+										value="#{personBean.schueler.loginName}" required="true"
+										requiredMessage="Bitte einen Login-Namen eingeben."
+										ajax="true" autocomplete="true" update="loginNameM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="religion" id="religionM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Religion:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Religion" id="religion"
+										value="#{personBean.schueler.religion}" ajax="true"
+										autocomplete="true" update="religionM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="profilBild" id="profilBildM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Profil-Bild:" />
+								</b:column>
+
+								<b:column medium-screen="2" >
+
+									<p:graphicImage id="profilBild" 
+										value="#{personBean.schuelerProfilBild}" height="150px" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 10px;margin-bottom: 10px;">
+								<b:column medium-screen="2" />								
+								<b:column medium-screen="3">
+									<p:fileUpload mode="advanced" dragDropSupport="true" label="Profil-Bild hochladen"
+										id="fileUpload"
+										fileUploadListener="#{personBean.schuelerProfilBildHochladen}"
+										style="margin-top: 10px;" auto="true"
+										allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="profilBild"
+										sizeLimit="1000000" description="Profil Bild auswählen" />
+
+								</b:column>
+							</b:row>
+							<b:row rendered="#{personBean.wirdEditiert}" style="margin-top: 10px;margin-bottom: 10px;">
+								<b:column medium-screen="2" />
+								<b:column medium-screen="2">
+									<b:commandButton look="danger" icon-awesome="fa fa-trash"
+										value="Profil-Bild löschen" ajax="true" update="profilBild"
+										actionListener="#{personBean.schueler.setProfilBild(null)}" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 10px;">
+								<b:column span="7" offset="2" style-class="message">
+									<b:message id="besonderheitMessage" for="besonderheit" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Besonderheit:" />
+								</b:column>
+
+								<b:column medium-screen="10">
+									<p:panel style="border: none;">
+										<p:inputTextarea id="besonderheit" styleClass="col-xs-6"
+											style="background: none #ffffff;font-size: 14px;color: #666;"
+											rows="4" cols="12"
+											value="#{personBean.schueler.besonderheit}" counter="display"
+											maxlength="200" size="200" autoResize="false"
+											counterTemplate="{0} verbleibende Zeichen.">
+											<f:ajax event="keyup" render="besonderheitMessage" />
+										</p:inputTextarea>
+										<p:watermark for="besonderheit" value="Besonderheit" />
+									</p:panel>
+								</b:column>
+
+
+							</b:row>
+							<b:row>
+								<b:column medium-screen="5" offset="2">
+									<h:outputText id="display" />
+								</b:column>
+							</b:row>
+						</b:tab>
+						<b:tab title="Angaben zum Sorgeberechtigten">
+							<b:row style="margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="verwandtschaftsgrad" id="verwandtschaftsgradM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="Verwandtschaftsgrad*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Verwandtschaftsgrad"
+										id="verwandtschaftsgrad"
+										value="#{personBean.sorgeberechtigter.verwandtschaftsgrad}"
+										required="true"
+										requiredMessage="Bitte den Verwandtschaftsgrad  zum Schüler eingeben."
+										ajax="true" autocomplete="true" update="verwandtschaftsgradM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="anredeSB" id="anredeSBM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="SB-Anrede*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:selectOneMenu id="anredeSB"
+										value="#{personBean.sorgeberechtigter.anrede}"
+										required="true"
+										requiredMessage="Bitte ein SB-Anrede auswählen."
+										ajax="true" update="anredeSBM">
+										<f:ajax event="change" render="anredeSBM"></f:ajax>
+										<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
+										<f:selectItems value="#{personBean.anredeValues}" />
+									</b:selectOneMenu>
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="vornameSB" id="vornameSBM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="SB-Vorname*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Vorname" id="vornameSB"
+										value="#{personBean.sorgeberechtigter.vorname}"
+										required="true"
+										requiredMessage="Bitte einen SB-Vornamen eingeben."
+										ajax="true" autocomplete="true" update="vornameSBM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="nachnameSB" id="nachnameSBM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="SB-Nachname*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Nachname" id="nachnameSB"
+										value="#{personBean.sorgeberechtigter.nachname}"
+										required="true"
+										requiredMessage="Bitte einen SB-Nachname eingeben."
+										ajax="true" autocomplete="true" update="nachnameSBM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message id="geburtstagMessageSB" for="geburtstagSB" />
+
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="SB-Gebutsdatum*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:datepicker id="geburtstagSB"
+										value="#{personBean.sorgeberechtigter.geburtstag}" lang="de"
+										showButtonPanel="true"
+										requiredMessage="Bitte ein SB-Gebutsdatum eingeben."
+										required="true" changeMonth="true" changeYear="true"
+										showWeek="true" mode="popup-icon">
+										<f:ajax event="keyup" render="geburtstagMessageSB" />
+									</b:datepicker>
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="emailSB" id="emailSBM" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="SB-E-Mail Adresse*:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="E-Mail Adresse" id="emailSB"
+										disabled="#{personBean.wirdEditiert}"
+										value="#{personBean.sorgeberechtigter.email}" required="true"
+										requiredMessage="Bitte eine SB-E-mail Adresse eingeben."
+										ajax="true" autocomplete="true"
+										validatorMessage="Ungültiges E-Mail Format!" update="emailSBM">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+									</b:inputText>
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message id="telefonnummerMessageSB" for="telefonnummerSB" />
+								</b:column>
+							</b:row>
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="SB-Telefonnumme:" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Telefonnummer" id="telefonnummerSB"
+										value="#{personBean.sorgeberechtigter.telefonnummer}"
+										ajax="true" autocomplete="false"
+										update="telefonnummerMessageSB" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="strasseSB" id="strasseSBM" />
+								</b:column>
+								<b:column span="3" style-class="message">
+									<b:message for="hausnummerSB" id="hausnummerSBM" />
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="SB-Straße/Hausnummer*:" />
+								</b:column>
+								<b:column medium-screen="3">
+									<b:inputText placeholder="Straße" id="strasseSB"
+										value="#{personBean.sorgeberechtigter.adresse.strasse}"
+										required="true"
+										requiredMessage="Bitte eine SB-Straße eingeben." ajax="true"
+										autocomplete="false" update="strasseSBM" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="Hausnummer" id="hausnummerSB"
+										value="#{personBean.sorgeberechtigter.adresse.hausnummer}"
+										required="true"
+										requiredMessage="Bitte eine SB-Hausnummer eingeben."
+										ajax="true" autocomplete="true" update="hausnummerSBM" />
+								</b:column>
+							</b:row>
+							<b:row style="margin-top: 20px;margin-bottom: 10px;">
+								<b:column span="3" offset="2" style-class="message">
+									<b:message for="ortSB" id="ortSBM" />
+								</b:column>
+								<b:column span="3" style-class="message">
+									<b:message for="plzSB" id="plzSBM" />
+								</b:column>
+							</b:row>
+
+							<b:row>
+								<b:column medium-screen="2">
+									<h:outputText value="SB-Ort/PLZ*:" />
+								</b:column>
+								<b:column medium-screen="3">
+									<b:inputText placeholder="Ort" id="ortSB"
+										value="#{personBean.sorgeberechtigter.adresse.ort}"
+										required="true" requiredMessage="Bitte einen SB-Ort eingeben."
+										ajax="true" autocomplete="true" update="ortSBM" />
+								</b:column>
+								<b:column medium-screen="2">
+									<b:inputText placeholder="PLZ" id="plzSB"
+										value="#{personBean.sorgeberechtigter.adresse.plz}"
+										required="true" requiredMessage="Bitte eine SB-PLZ eingeben."
+										ajax="true" autocomplete="true" update="plzSBM" />
+								</b:column>
+							</b:row>
+						</b:tab>
+
+					</b:tabView>
+					<b:row style="margin-top: 40px;">
+						<b:column medium-screen="5" style-class="message">
+							<h:outputText value="* Pflichtfeld"
+								style="font-size:10px;float: left;" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:commandButton id="create" value="Schüler erstellen"
+								rendered="#{!personBean.wirdEditiert}"
+								actionListener="#{personBean.createSchueler}" update="@form"
+								ajax="true" look="primary btn-block"
+								icon="glyphicon glyphicon-plus" />
+							<b:commandButton id="edit" value="Schüler editieren"
+								rendered="#{personBean.wirdEditiert}"
+								actionListener="#{personBean.editSchueler}" update="@form"
+								ajax="true" look="primary btn-block" icon-awesome="fa fa-pencil" />
+						</b:column>
+					</b:row>
+				</h:form>
+			</b:panel>
+		</b:panel>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,117 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+		<b:panel span="12" look="primary">
+			<b:panel span="12" look="primary">
+				<h:outputLabel
+					value=" Willkommen im Notenverwaltungssystem #{user.anrede}
+					#{personBean.lehrerEingeloggt ? user.titel : ''} #{user.vorname}
+					#{user.nachname}."
+					styleClass="col-md-12" style="font-size: 30px;text-align:center;" />
+			</b:panel>
+			<b:panel span="12" look="primary">
+				<b:row>
+					<b:column style="margin: 10px 10px;text-align: center;" col-md="4">
+						<p:graphicImage rendered="#{!(user.profilBild == null)}"
+							value="#{personBean.profilBild}" style="width: 15em;height:15em;">
+							<f:param name="benutzerId" value="#{user.personId}" />
+						</p:graphicImage>
+						<p:graphicImage rendered="#{user.profilBild == null}"
+							value="resources/images/leeresProfilBild.png"
+							style="width: 15em;height:15em;" />
+
+					</b:column>
+					<b:column col-md="7">
+						<b:row rendered="#{personBean.lehrerEingeloggt}">
+							<b:column col-lg="2" col-md="3" style="margin: 10px 10px;">
+								<h:outputText value="Personal-Nr:" />
+							</b:column>
+							<b:column col-md="2" style="margin: 10px 10px;">
+								<h:outputText value="#{user.personalNr}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-lg="2" col-md="3" style="margin: 10px 10px;">
+								<h:outputText value="Name:" />
+							</b:column>
+							<b:column col-md="9" style="margin: 10px 10px;"
+								rendered="#{personBean.lehrerEingeloggt}">
+								<h:outputText
+									rendered="#{user.titel != null and not empty user.titel}"
+									value="#{user.anrede} &#160;&#160; #{user.titel} &#160;&#160; #{user.vorname} &#160;&#160; #{user.nachname}" />
+								<h:outputText
+									rendered="#{user.titel == null || empty user.titel}"
+									value="#{user.anrede} &#160;&#160; #{user.vorname} &#160;&#160; #{user.nachname}" />
+							</b:column>
+							<b:column col-md="9" style="margin: 10px 10px;"
+								rendered="#{!(personBean.lehrerEingeloggt)}">
+								<h:outputText
+									value="#{user.anrede} &#160;&#160; #{user.vorname} &#160;&#160; #{user.nachname}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-lg="2" col-md="3" style="margin: 10px 10px;">
+								<h:outputText value="Geburtstag:" />
+							</b:column>
+							<b:column col-md="2" style="margin: 10px 10px;">
+								<h:outputText value="#{user.geburtstag}">
+									<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+								</h:outputText>
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-lg="2" col-md="3" style="margin: 10px 10px;">
+								<h:outputText value="Email:" />
+							</b:column>
+							<b:column col-md="2" style="margin: 10px 10px;">
+								<h:outputText value="#{user.email}" />
+							</b:column>
+						</b:row>
+						<b:row
+							rendered="#{user.telefonnummer != null and not empty user.telefonnummer}">
+							<b:column col-lg="2" col-md="3" style="margin: 10px 10px;">
+								<h:outputText value="Telefonnummer:" />
+							</b:column>
+							<b:column col-md="2" style="margin: 10px 10px;">
+								<h:outputText value="#{user.telefonnummer}" />
+							</b:column>
+						</b:row>
+						<b:row
+							rendered="#{user.religion != null and not empty user.religion}">
+							<b:column col-lg="2" col-md="3" style="margin: 10px 10px;">
+								<h:outputText value="Religion:" />
+							</b:column>
+							<b:column col-md="2" style="margin: 10px 10px;">
+								<h:outputText value="#{user.religion}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-lg="2" col-md="3" style="margin: 10px 10px;">
+								<h:outputText value="Adresse:" />
+							</b:column>
+							<b:column col-md="5" style="margin: 10px 10px;">
+								<h:outputText
+									value="#{user.adresse.strasse} &#160;&#160; #{user.adresse.hausnummer}" />
+							</b:column>
+						</b:row>
+						<b:row>
+							<b:column col-lg="2" col-md="3" style="margin: 0px 10px;" />
+							<b:column col-md="5" style="margin: 10px 10px;">
+								<h:outputText
+									value="#{user.adresse.plz} &#160;&#160; #{user.adresse.ort}" />
+							</b:column>
+						</b:row>
+					</b:column>
+				</b:row>
+
+
+			</b:panel>
+		</b:panel>
+	</ui:define>
+
+</ui:composition>

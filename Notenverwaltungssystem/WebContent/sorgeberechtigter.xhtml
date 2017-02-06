@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<b:row>
+		<b:column style="margin: 5px 10px;">
+			<h:outputText value="Name:" />
+		</b:column>
+	</b:row>
+	<b:row>
+		<b:column style="margin: 5px 10px;">
+			<h:outputText
+				value="#{personBean.sorgeberechtigter.anrede} &#160; #{personBean.sorgeberechtigter.vorname} &#160; #{personBean.sorgeberechtigter.nachname}" />
+		</b:column>
+	</b:row>
+
+	<b:row>
+		<b:column style="margin: 5px 10px;">
+			<h:outputText value="Geburtstag:" />
+		</b:column>
+	</b:row>
+	<b:row>
+		<b:column style="margin: 5px 10px;">
+			<h:outputText value="#{personBean.sorgeberechtigter.geburtstag}">
+				<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+			</h:outputText>
+		</b:column>
+	</b:row>
+	<b:row>
+		<b:column style="margin: 5px 10px;">
+			<h:outputText value="Email:" />
+		</b:column>
+	</b:row>
+	<b:row>
+		<b:column style="margin: 5px 10px;word-break:break-all;word-wrap:break-word">
+			<h:outputText value="#{personBean.sorgeberechtigter.email}" />
+		</b:column>
+	</b:row>
+	<b:row
+		rendered="#{personBean.sorgeberechtigter.telefonnummer != null and not empty personBean.sorgeberechtigter.telefonnummer}">
+		<b:column style="margin: 5px 10px;">
+			<h:outputText value="Telefonnummer:" />
+		</b:column>
+	</b:row>
+	<b:row
+		rendered="#{personBean.sorgeberechtigter.telefonnummer != null and not empty personBean.sorgeberechtigter.telefonnummer}">
+		<b:column style="margin: 5px 10px;">
+			<h:outputText value="#{personBean.sorgeberechtigter.telefonnummer}" />
+		</b:column>
+	</b:row>
+	<b:row>
+		<b:column style="margin: 5px 10px;">
+			<h:outputText value="Adresse:" />
+		</b:column>
+	</b:row>
+	<b:row>
+		<b:column style="margin: 5px 10px;">
+			<h:outputText
+				value="#{personBean.sorgeberechtigter.adresse.strasse} &#160; #{personBean.sorgeberechtigter.adresse.hausnummer}" />
+		</b:column>
+	</b:row>
+	<b:row>
+		<b:column style="margin: 5px 10px;">
+			<h:outputText
+				value=" #{personBean.sorgeberechtigter.adresse.plz} &#160; #{personBean.sorgeberechtigter.adresse.ort}" />
+		</b:column>
+
+	</b:row>
+</ui:composition>

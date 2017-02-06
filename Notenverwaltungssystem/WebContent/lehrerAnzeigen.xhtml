@@ -1,0 +1,105 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+
+		<b:panel col-xs="12" title="Lehrer Anzeige" showCollapseLink='false'
+			look="primary">
+			<h:form id="lehrerAnzeigenForm">
+				<b:growl allow-dismiss="true" placement-align="center"
+					placementFrom="top" />
+				<b:dataTable disabled="#{empty personBean.lehrerListe}"
+					scrollSize="800px" value="#{personBean.lehrerListe}"
+					scrollCollapse="true" var="lehrer" fixedHeader="true"
+					scroll-x="false" responsive="true" lang="de">
+					<b:dataTableColumn value="#{lehrer.personId}" label="Id" />
+					<b:dataTableColumn value="#{lehrer.personalNr}" />
+					<b:dataTableColumn value="#{lehrer.vorname}" />
+					<b:dataTableColumn value="#{lehrer.nachname}" />
+					<b:dataTableColumn value="#{lehrer.email}" />
+					<h:column style="text-align: center;">
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<b:commandButton icon-awesome="fa fa-search" look="info"
+							style="margin: 5px 5px;" ajax="true" update="lehrerAnzeigen"
+							actionListener="#{personBean.prepareShowLehrer(lehrer.personId)}"
+							oncomplete="$('.lehrerAnzeigenClass').modal();return false;"
+							tooltip="Lehrer anzeigen" />
+						<b:commandButton icon-awesome="fa fa-pencil" look="warning"
+							style="margin: 5px 5px;"
+							action="#{personBean.prepareEditLehrer(lehrer.personId)}"
+							tooltip="Lehrer editieren" />
+						<b:commandButton style="cursor: pointer;margin: 5px 5px;"
+							ajax="true" update="@(.message)" look="danger"
+							actionListener="#{personBean.setLehrer(lehrer)}"
+							oncomplete="$('.deleteLehrerClass').modal();return false;"
+							icon-awesome="fa fa-trash" tooltip="Lehrer löschen" />
+
+						<b:commandButton style="cursor: pointer; margin: 5px 5px;"
+							ajax="true" update="@(.message)" look="default"
+							actionListener="#{personBean.setLehrer(lehrer)}"
+							oncomplete="$('.passwortResetLehrerClass').modal();return false;"
+							icon-awesome="fa fa-lock" tooltip="Passwort zurücksetzen" />
+
+					</h:column>
+
+				</b:dataTable>
+			</h:form>
+		</b:panel>
+		<b:modal id="lehrerAnzeigen" title="Lehrer Anzeige"
+			styleClass="lehrerAnzeigenClass" backdrop="false">
+			<b:panel look="primary">
+				<ui:insert name="lehrerProfil">
+					<ui:include src="lehrerProfil.xhtml" />
+				</ui:insert>
+			</b:panel>
+			<f:facet name="footer">
+				<h:form>
+					<b:button value="Close" dismiss="modal" onclick="return false;"
+						look="danger" />
+				</h:form>
+			</f:facet>
+		</b:modal>
+		<b:modal id="deleteLehrer" title="Lehrer löschen"
+			styleClass="deleteLehrerClass" backdrop="false">
+			<h:outputText value="Wollen Sie den Lehrer wirklich löschen?" />
+
+			<f:facet name="footer">
+				<h:form>
+
+					<b:commandButton value="Ja" ajax="true" update="lehrerAnzeigenForm"
+						id="test" actionListener="#{personBean.deleteLehrer}"
+						oncomplete="$('.deleteLehrerClass').modal('hide');return false;"
+						look="success" icon="glyphicon glyphicon-ok" />
+					<b:button value="Nein" dismiss="modal" onclick="return false;"
+						look="danger" icon="glyphicon glyphicon-remove" />
+
+				</h:form>
+			</f:facet>
+		</b:modal>
+		<b:modal id="passwortResetLehrer" title="Passwort zurücksetzen"
+			styleClass="passwortResetLehrerClass" backdrop="false">
+			<h:outputText value="Wollen Sie wirklich das Passwort zurücksetzen" />
+
+			<f:facet name="footer">
+				<h:form>
+
+					<b:commandButton value="Ja" ajax="true" update="lehrerAnzeigenForm"
+						id="test"
+						actionListener="#{personBean.neuesPasswortGenerierenLehrer}"
+						oncomplete="$('.passwortResetLehrerClass').modal('hide');return false;"
+						look="success" icon="glyphicon glyphicon-ok" />
+					<b:button value="Nein" dismiss="modal" onclick="return false;"
+						look="danger" icon="glyphicon glyphicon-remove" />
+
+				</h:form>
+			</f:facet>
+		</b:modal>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="benutzerForm">
+		<b:panel look="primary" >
+			<b:row style="background-color: #F0FFFF;"
+				rendered="#{user.hasRolle('Schulleiter')}">			
+				<b:column col-xs="3">
+					<b:navLink header="Schulleiter-Navigation"
+						style="padding-left:5px;" />
+				</b:column>
+			</b:row>
+			<b:row 
+				rendered="#{user.hasRolle('Schulleiter')}">
+				<b:listLinks>
+					<b:navLink style="cursor: pointer;"
+						onclick="$('#benutzerAnlegen').modal('show')" ajax="true"
+						value="Benutzer anlegen" icon-awesome="fa fa-user" />
+					<b:navCommandLink style="cursor: pointer;"
+						action="#{klasseBean.prepareCreate}" value="Klasse anlegen"
+						icon-awesome="fa fa-cube" />
+					<b:navLink style="cursor: pointer;"
+						onclick="$('#benutzerAnzeigen').modal('show')" ajax="true"
+						value="Benutzer anzeigen" icon-awesome="fa fa-users" />
+					<b:navCommandLink style="cursor: pointer;"
+						action="#{klasseBean.prepareList}" value="Klassen anzeigen"
+						icon-awesome="fa fa-cubes" />
+
+
+				</b:listLinks>
+			</b:row>
+			<b:row style="background-color: #F0FFFF;"
+				rendered="#{personBean.lehrerEingeloggt}">
+				
+				<b:column col-xs="3">
+					<b:navLink header="Lehrer-Navigation" style="padding-left:5px;" />
+				</b:column>
+			</b:row>
+			<b:row 
+				rendered="#{personBean.lehrerEingeloggt}">
+				<b:listLinks>
+					<b:navCommandLink style="cursor: pointer;"
+						action="#{klasseBean.prepareListKlassenVonLehrer(user.personId)}"
+						value="Meine Klassen anzeigen" icon-awesome="fa fa-cube" />
+					<b:navCommandLink style="cursor: pointer;"
+						action="#{fachBean.prepareListFaecherVonLehrer(user.personId)}"
+						value="Meine Fächer anzeigen" icon-awesome="fa fa-book" />
+				</b:listLinks>
+			</b:row>
+
+			<b:row style="background-color: #F0FFFF;"
+				rendered="#{!personBean.lehrerEingeloggt}">
+				
+				<b:column col-xs="10">
+					<b:navLink header="Schüler-Navigation" style="padding-left:5px;" />
+				</b:column>
+			</b:row>
+			<b:row 
+				rendered="#{!personBean.lehrerEingeloggt}">
+				<b:listLinks>
+					<b:navLink style="cursor: pointer;" update="sorgeberechtigter"
+						onclick="$('#sorgeberechtigter').modal('show')" ajax="true"
+						value="Sorgeberechtigter" icon-awesome="fa fa-user" />
+
+					<b:navCommandLink style="cursor: pointer;" ajax="true"
+						action="#{fachBean.prepareShowNotenAlsSchueler(user.personId)}"
+						icon-awesome="fa fa-list-alt" value="Notenansicht" />
+				</b:listLinks>
+			</b:row>
+		</b:panel>
+	</h:form>
+
+
+
+	<b:modal id="sorgeberechtigter" title="Sorgeberechtigter"
+		backdrop="false" rendered="#{!personBean.lehrerEingeloggt}">
+		<b:panel look="primary">
+			<ui:insert name="sorgeberechtigter">
+				<ui:include src="/sorgeberechtigter.xhtml" />
+			</ui:insert>
+		</b:panel>
+		<f:facet name="footer">
+			<h:form>
+				<b:button value="close" dismiss="modal" onclick="return false;"
+					look="danger" />
+
+			</h:form>
+		</f:facet>
+	</b:modal>
+
+	<b:modal id="benutzerAnlegen" title="Benutzer anlegen" backdrop="false"
+		rendered="#{user.hasRolle('Schulleiter')}">
+		<h:outputText value="Welche Art von Benutzer möchten Sie anlegen?" />
+		<f:facet name="footer">
+			<h:form>
+				<b:commandButton value="Lehrer"
+					action="#{personBean.prepareCreateLehrer}" look="primary" />
+				<b:commandButton value="Schüler"
+					action="#{personBean.prepareCreateSchueler}" look="primary" />
+				<b:button value="close" dismiss="modal" onclick="return false;"
+					look="danger" />
+			</h:form>
+		</f:facet>
+	</b:modal>
+	<b:modal id="benutzerAnzeigen" title="Benutzer anzeigen"
+		backdrop="false" rendered="#{user.hasRolle('Schulleiter')}">
+		<h:outputText value="Welche Art von Benutzern soll angezeigt werden?" />
+		<f:facet name="footer">
+			<h:form>
+				<b:commandButton value="Lehrer"
+					action="#{personBean.prepareListLehrer}" look="primary" />
+				<b:commandButton value="Schüler"
+					action="#{personBean.prepareListSchueler}" look="primary" />
+				<b:button value="close" dismiss="modal" onclick="return false;"
+					look="danger" />
+			</h:form>
+		</f:facet>
+	</b:modal>
+
+</ui:composition>

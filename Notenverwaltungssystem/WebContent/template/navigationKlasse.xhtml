@@ -1,0 +1,101 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form id="klassenForm">
+		<b:panel look="primary" showCollapseLink='false'>
+
+			<b:growl allow-dismiss="true" placement-align="center"
+				placementFrom="top" />
+			<b:row style="background-color: #F0FFFF;">				
+				<b:column col-xs="10">
+					<b:navLink header="Klassen-Navigation" style="padding-left:5px;" />
+				</b:column>
+			</b:row>
+			<b:row>
+				<b:listLinks>
+					<b:navCommandLink style="cursor: pointer;"
+						action="#{personBean.prepareListSchuelerByKlasse(klasseBean.klasse.klasseId)}"
+						ajax="true" value="Schüler anzeigen" icon-awesome="fa fa-users" />
+					<b:navCommandLink style="cursor: pointer;"
+						action="#{personBean.prepareListGefaehrdeteSchuelerByKlasse(klasseBean.klasse.klasseId)}"
+						value="Gefährdete Schüler anzeigen" ajax="true"
+						icon-awesome="fa fa-exclamation-triangle" />
+					<b:navCommandLink style="cursor: pointer;"
+						action="#{fachBean.prepareCreateKlausur(user.personId, klasseBean.klasse.klasseId)}"
+						value="Klausur erfassen" icon-awesome="fa fa-plus"
+						rendered="#{klasseBean.klasse.istAktiv}" />
+					<b:navCommandLink style="cursor: pointer;"
+						rendered="#{(user.personId == klasseBean.klasse.klassenLehrer.personId) and klasseBean.klasse.istAktiv}"
+						ajax="true" update="@form"
+						oncomplete="$('.klassenkonferenzClass').modal();return false;"
+						value="Konferenz einberufen" icon-awesome="fa fa-bullhorn" />
+					<b:navCommandLink style="cursor: pointer;"
+						rendered="#{user.personId == klasseBean.klasse.klassenLehrer.personId and klasseBean.klasse.istAktiv}"
+						ajax="true" update="@form"
+						oncomplete="$('.klasseVersetzungsbedingungenClass').modal();return false;"
+						value="Versetzungsbedingungen prüfen"
+						icon-awesome="fa fa-check-square-o" />
+					<b:navCommandLink style="cursor: pointer;"
+						rendered="#{user.personId == klasseBean.klasse.klassenLehrer.personId and klasseBean.klasse.istAktiv}"
+						ajax="true" update="@form"
+						oncomplete="$('.klasseAbschliessenClass').modal();return false;"
+						value="Klasse abschließen" icon-awesome="fa fa-graduation-cap" />
+
+				</b:listLinks>
+			</b:row>
+		</b:panel>
+	</h:form>
+	<b:modal id="klasseAbschliessen" title="Klasse abschließen"
+		rendered="#{user.personId == klasseBean.klasse.klassenLehrer.personId and klasseBean.klasse.istAktiv}"
+		styleClass="klasseAbschliessenClass" backdrop="false">
+		<h:outputText value="Wollen Sie die Klasse wirklich abschließen?" />
+
+		<f:facet name="footer">
+			<h:form>
+				<b:commandButton value="Ja" ajax="true" update="klassenForm"
+					actionListener="#{klasseBean.klasseAbschliessen}"
+					oncomplete="$('.klasseAbschliessenClass').modal('hide');return false;"
+					look="success" icon="glyphicon glyphicon-ok" />
+				<b:button value="Nein" dismiss="modal" onclick="return false;"
+					look="danger" icon="glyphicon glyphicon-remove" />
+			</h:form>
+		</f:facet>
+	</b:modal>
+	<b:modal id="klasseVersetzungsbedingungen"
+		title="Versetzungsbedingungen prüfen"
+		rendered="#{user.personId == klasseBean.klasse.klassenLehrer.personId and klasseBean.klasse.istAktiv}"
+		styleClass="klasseVersetzungsbedingungenClass" backdrop="false">
+		<h:outputText
+			value="Wollen Sie die Versetzungsbedingungen von allen Schülern dieser Klasse wirklich prüfen?" />
+
+		<f:facet name="footer">
+			<h:form>				
+				<b:commandButton value="Ja" ajax="true" update="klassenForm"
+					actionListener="#{klasseBean.versetzungsbedingungenPrüfen}"
+					oncomplete="$('.klasseVersetzungsbedingungenClass').modal('hide');return false;"
+					look="success" icon="glyphicon glyphicon-ok" />
+					<b:button value="Nein" dismiss="modal" onclick="return false;"
+					look="danger" icon="glyphicon glyphicon-remove" />
+			</h:form>
+		</f:facet>
+	</b:modal>
+	<b:modal id="klassenkonferenz" title="Klassenkonferenz"
+		rendered="#{user.personId == klasseBean.klasse.klassenLehrer.personId and klasseBean.klasse.istAktiv}"
+		styleClass="klassenkonferenzClass" backdrop="false">
+		<b:panel look="primary">
+			<ui:insert name="klassenkonferenz">
+				<ui:include src="/klassenkonferenz.xhtml" />
+			</ui:insert>
+		</b:panel>
+		<f:facet name="footer">
+			<h:form>
+				<b:button value="Close" dismiss="modal" onclick="return false;"
+					look="danger" />
+			</h:form>
+		</f:facet>
+	</b:modal>
+
+</ui:composition>

@@ -1,0 +1,109 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<h:form>
+		<b:row>
+			<b:column style="margin: 10px 10px;text-align: center;" span="4">
+				<p:graphicImage id="schuelerImage" style="width: 12em;height:12em;"
+					rendered="#{!(personBean.lehrer.profilBild == null)}"
+					value="#{personBean.lehrerProfilBild}" />
+				<p:graphicImage rendered="#{(personBean.lehrer.profilBild == null)}"
+					value="resources/images/leeresProfilBild.png"
+					style="width: 12em;height:12em;" />
+			</b:column>
+			<b:column span="7">
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="Personal-Nr:" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="#{personBean.lehrer.personalNr}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="Name:" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText rendered="#{personBean.lehrer.titel != null and not empty personBean.lehrer.titel}"
+							value="#{personBean.lehrer.anrede} &#160; #{personBean.lehrer.titel} &#160; #{personBean.lehrer.vorname} &#160; #{personBean.lehrer.nachname}" />
+						<h:outputText rendered="#{personBean.lehrer.titel == null || empty personBean.lehrer.titel}"
+							value="#{personBean.lehrer.anrede} &#160; #{personBean.lehrer.vorname} &#160; #{personBean.lehrer.nachname}" />
+					</b:column>
+				</b:row>
+
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="Geburtstag:" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="#{personBean.lehrer.geburtstag}">
+							<f:convertDateTime type="date" pattern="dd.MM.yyyy" />
+						</h:outputText>
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="Email:" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column
+						style="margin: 5px 10px;word-break:break-all;word-wrap:break-word">
+						<h:outputText value="#{personBean.lehrer.email}" />
+					</b:column>
+				</b:row>
+				<b:row
+					rendered="#{personBean.lehrer.telefonnummer != null and not empty personBean.lehrer.telefonnummer}">
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="Telefonnummer:" />
+					</b:column>
+				</b:row>
+				<b:row
+					rendered="#{personBean.lehrer.telefonnummer != null and not empty personBean.lehrer.telefonnummer}">
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="#{personBean.lehrer.telefonnummer}" />
+					</b:column>
+				</b:row>
+				<b:row
+					rendered="#{personBean.lehrer.religion != null and not empty personBean.lehrer.religion}">
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="Religion:" />
+					</b:column>
+				</b:row>
+				<b:row
+					rendered="#{personBean.lehrer.religion != null and not empty personBean.lehrer.religion}">
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="#{personBean.lehrer.religion}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText value="Adresse:" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText
+							value="#{personBean.lehrer.adresse.strasse} &#160; #{personBean.lehrer.adresse.hausnummer}" />
+					</b:column>
+				</b:row>
+				<b:row>
+					<b:column style="margin: 5px 10px;">
+						<h:outputText
+							value="#{personBean.lehrer.adresse.plz} &#160; #{personBean.lehrer.adresse.ort}" />
+					</b:column>
+				</b:row>
+			</b:column>
+		</b:row>
+	</h:form>
+</ui:composition>

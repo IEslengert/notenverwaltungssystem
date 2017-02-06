@@ -1,0 +1,86 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	<ui:define name="content">
+		<h:form id="klassenAnzeigenForm">
+			<b:panel col-xs="12" look="primary" title="Klassen Anzeige"
+				showCollapseLink="false">
+
+				<b:growl allow-dismiss="true" placement-align="center"
+					placementFrom="top" />
+				<b:dataTable disabled="#{empty klasseBean.klassenListe}"
+					scrollSize="800px" value="#{klasseBean.klassenListe}"
+					scrollCollapse="true" var="klasse" fixedHeader="true"
+					scroll-x="false" responsive="true" lang="de">
+					<b:dataTableColumn value="#{klasse.klasseId}" label="Id" />
+					<b:dataTableColumn value="#{klasse.jahrgangsstufe}" />
+					<b:dataTableColumn value="#{klasse.jahr}" />
+					<b:dataTableColumn value="#{klasse.istAktiv? 'Ja': 'Nein'}"
+						label="Ist Aktiv" />
+					<b:dataTableColumn value="#{klasse.klassenLehrer.personId}"
+						label="Lehrer Id" />
+					<b:dataTableColumn value="#{klasse.klassenLehrer.personalNr}"
+						label="Lehrer PNr" />
+					<b:dataTableColumn value="#{klasse.klassenLehrer.vorname}"
+						label="Lehrer Vorname" />
+					<b:dataTableColumn value="#{klasse.klassenLehrer.nachname}"
+						label="Lehrer Nachname" />
+					<h:column style="text-align: center;">
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+
+						<b:commandButton icon-awesome="fa fa-search" look="info"
+							style="margin: 5px 5px;"
+							action="#{klasseBean.prepareShow(klasse.klasseId)}"
+							tooltip="Klasse anzeigen" />
+						<b:commandButton rendered="#{user.hasRolle('Schulleiter')}"
+							icon-awesome="fa fa-book" look="primary" style="margin: 5px 5px;"
+							action="#{fachBean.prepareListFaecher(klasse.klasseId)}"
+							tooltip="Fächer verwalten" />
+						<b:commandButton rendered="#{user.hasRolle('Schulleiter')}"
+							icon-awesome="fa fa-user" look="success" style="margin: 5px 5px;"
+							action="#{klasseBean.prepareAssignSchuelerToKlasse(klasse.klasseId)}"
+							tooltip="Schüler zuordnen" />
+						<b:commandButton rendered="#{user.hasRolle('Schulleiter')}"
+							icon-awesome="fa fa-pencil" look="warning" style="margin: 5px 5px;"
+							action="#{klasseBean.prepareEdit(klasse.klasseId)}"
+							tooltip="Klasse editieren" />
+						<b:commandButton id="test2" style="cursor: pointer;margin: 5px 5px;"
+							rendered="#{user.hasRolle('Schulleiter')}" ajax="true"
+							update="@(.message)" look="danger"
+							actionListener="#{klasseBean.setKlasse(klasse)}"
+							oncomplete="$('.deleteKlasseClass').modal();return false;"
+							icon-awesome="fa fa-trash" tooltip="Klasse löschen" />
+
+
+					</h:column>
+				</b:dataTable>
+
+			</b:panel>
+		</h:form>
+		<b:modal id="deleteKlasse" title="Klasse löschen"
+			rendered="#{user.hasRolle('Schulleiter')}"
+			styleClass="deleteKlasseClass" backdrop="false">
+			<h:outputText value="Wollen Sie die Klasse wirklich löschen?" />
+
+			<f:facet name="footer">
+				<h:form>
+
+					<b:commandButton value="Ja" ajax="true"
+						update="klassenAnzeigenForm"
+						actionListener="#{klasseBean.deleteKlasse}"
+						oncomplete="$('.deleteKlasseClass').modal('hide');return false;"
+						look="success" icon="glyphicon glyphicon-ok" />
+					<b:button value="Nein" dismiss="modal" onclick="return false;"
+						look="danger" icon="glyphicon glyphicon-remove" />
+				</h:form>
+			</f:facet>
+		</b:modal>
+
+
+	</ui:define>
+</ui:composition>

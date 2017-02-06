@@ -1,0 +1,37 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	<ui:define name="content">
+		<h:form id="klassenAnzeigenForm">
+			<b:panel col-xs="12" look="primary" title="Meine Klassen"
+				showCollapseLink="false">
+
+				<b:growl allow-dismiss="true" placement-align="center"
+					placementFrom="top" />
+				<b:dataTable disabled="#{empty klasseBean.klassenListe}"
+					scrollSize="800px" value="#{klasseBean.klassenListe}"
+					scrollCollapse="true" var="klasse" fixedHeader="true"
+					scroll-x="false" responsive="true" lang="de">
+					<b:dataTableColumn value="#{klasse.klasseId}" label="Id" />
+					<b:dataTableColumn value="#{klasse.jahrgangsstufe}" />
+					<b:dataTableColumn value="#{klasse.jahr}" />
+					<b:dataTableColumn value="#{klasse.istAktiv? 'Ja': 'Nein'}"
+						label="Ist Aktiv" />					
+					<h:column style="text-align: center;">
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+
+						<b:commandButton icon-awesome="fa fa-search" look="info"
+							style="margin: 0 5px;"
+							action="#{klasseBean.prepareShow(klasse.klasseId)}"
+							tooltip="Klasse anzeigen" />
+					</h:column>
+				</b:dataTable>
+			</b:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

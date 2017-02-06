@@ -1,0 +1,119 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+
+		<b:panel span="12" look="primary"
+			title="#{!fachBean.wirdEditiert? 'Fach hinzufügen' : 'Fach  editieren'}"
+			showCollapseLink="false">
+			<b:panel col-md="12" look="primary">
+				<h:form>
+					<b:commandButton icon="glyphicon glyphicon-menu-left"
+						immediate="true" look="primary" style="margin: 0 5px;float: left"
+						value="Zurück"
+						action="#{fachBean.prepareListFaecher(klasseBean.klasse.klasseId)}"
+						tooltip="Zurück zur Fächer Anzeige" />
+				</h:form>
+			</b:panel>
+			<b:panel col-md="12" look="primary" id="createEditFachPanel">
+				<h:form>
+					<b:row style="margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="lehrer" id="lehrerM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Fachlehrer:" />
+						</b:column>
+						<b:column medium-screen="2">
+
+							<p:selectOneMenu id="lehrer" style="width: 100%;height: 38px"
+								value="#{fachBean.fach.lehrer}" var="lehrer" filter="true"
+								filterMatchMode="contains" converter="benutzerConverter">
+								<f:ajax event="change" render="lehrerM"></f:ajax>
+								<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
+								<f:selectItems value="#{personBean.lehrerListe}"
+									itemValue="#{lehrer2}"
+									itemLabel="#{lehrer2.personId} #{lehrer2.personalNr} #{lehrer2.vorname} #{lehrer2.nachname}"
+									var="lehrer2" />
+								<p:column>
+									<h:outputText value="#{lehrer.personId}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{lehrer.personalNr}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{lehrer.vorname}" />
+								</p:column>
+								<p:column>
+									<h:outputText value="#{lehrer.nachname}" />
+								</p:column>
+							</p:selectOneMenu>
+
+						</b:column>
+					</b:row>
+				</h:form>
+				<h:form id="createEditFach">
+					<b:growl allow-dismiss="true" placement-align="center"
+						placementFrom="top" />
+					<b:row style="margin-top: 20px;margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="name" id="nameM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Fachname*:" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:inputText placeholder="Fachname" id="name"
+								disabled="#{fachBean.wirdEditiert}"
+								value="#{fachBean.fach.name}" required="true"
+								requiredMessage="Bitte einen Namen eingeben." ajax="true"
+								autocomplete="true" update="nameM" />
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 20px;margin-bottom: 10px;">
+						<b:column span="3" offset="2" style-class="message">
+							<b:message for="unterrichtssprache" id="unterrichtsspracheM" />
+						</b:column>
+					</b:row>
+					<b:row>
+						<b:column medium-screen="2">
+							<h:outputText value="Unterrichtssprache:" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:inputText placeholder="Unterrichtssprache"
+								id="unterrichtssprache"
+								value="#{fachBean.fach.unterrichtssprache}" ajax="true"
+								autocomplete="true" update="unterrichtsspracheM" />
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px;">
+						<b:column medium-screen="5" style-class="message">
+							<h:outputText value="* Pflichtfeld"
+								style="font-size:10px;float: left;" />
+						</b:column>
+						<b:column medium-screen="2">
+							<b:commandButton id="create" value="Fach hinzufügen"
+								rendered="#{!fachBean.wirdEditiert}"
+								actionListener="#{fachBean.createFach}"
+								update="createEditFachPanel" ajax="true"
+								look="primary btn-block" icon="glyphicon glyphicon-plus" />
+							<b:commandButton id="edit" value="Fach editieren"
+								rendered="#{fachBean.wirdEditiert}"
+								actionListener="#{fachBean.editFach}"
+								update="createEditFachPanel" ajax="true"
+								look="primary btn-block" icon-awesome="fa fa-pencil" />
+						</b:column>
+					</b:row>
+				</h:form>
+			</b:panel>
+		</b:panel>
+	</ui:define>
+</ui:composition>

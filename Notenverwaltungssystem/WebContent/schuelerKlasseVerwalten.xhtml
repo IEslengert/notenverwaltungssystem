@@ -1,0 +1,66 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+		<b:panel span="12" look="primary" title="Schüler Zuordnung"
+			showCollapseLink="false">
+			<b:panel col-md="12">
+				<h:form>
+					<b:commandButton icon="glyphicon glyphicon-menu-left"
+						immediate="true" look="primary" style="margin: 0 5px;float: left"
+						value="Zurück" action="klassenAnzeigen"
+						tooltip="Zurück zur Klassen Anzeige" />
+				</h:form>
+			</b:panel>
+			<b:panel col-md="12" look="primary" id="schuelerZuordnungPanel">
+				<h:form id="schuelerZuordnung">
+					<b:row>
+						<b:column>
+							<p:pickList id="schuelerList"
+								rendered="#{!(klasseBean.dualSchuelerListe == null)}"
+								value="#{klasseBean.dualSchuelerListe}" var="schueler"
+								itemValue="#{schueler}" addLabel="Hinzufügen"
+								addAllLabel="Alle hinzufügen" removeLabel="Entfernen"
+								removeAllLabel="Alle entfernen" 
+								itemLabel="#{schueler.personId} #{schueler.vorname} #{schueler.nachname}"
+								showCheckbox="true" responsive="true" showSourceFilter="true"
+								showTargetFilter="true" filterMatchMode="contains"
+								converter="benutzerConverter">
+
+								<f:facet name="sourceCaption">Verfügbare Schüler</f:facet>
+								<f:facet name="targetCaption">Schüler in der Klasse</f:facet>
+
+								<p:column style="width:20%;padding-left: 10px;">
+									<h:outputText value="#{schueler.personId}" />
+								</p:column>
+								<p:column style="width:40%">
+									<h:outputText value="#{schueler.vorname}" />
+								</p:column>
+								<p:column style="width:40%">
+									<h:outputText value="#{schueler.nachname}" />
+								</p:column>
+							</p:pickList>
+						</b:column>
+					</b:row>
+					<b:row style="margin-top: 40px">
+						<b:column medium-screen="9" style-class="message">
+							<b:growl for="submit" allow-dismiss="true"
+								placement-align="center" placementFrom="top" />
+						</b:column>
+						<b:column medium-screen="3">
+							<b:commandButton id="submit" value="Zuordnung bestätigen"
+								actionListener="#{klasseBean.assignSchuelerToKlasse}"
+								update="schuelerZuordnungPanel" ajax="true"
+								look="primary btn-block" icon-awesome="fa fa-check" />
+						</b:column>
+					</b:row>
+				</h:form>
+			</b:panel>
+		</b:panel>
+	</ui:define>
+
+</ui:composition>

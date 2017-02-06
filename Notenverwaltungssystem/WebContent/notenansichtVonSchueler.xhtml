@@ -1,0 +1,50 @@
+<ui:composition template="/template/masterKlasse.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+	<ui:define name="content">
+
+		<b:panel col-md="12" look="primary" title="Notenanzeige"
+			showCollapseLink="false">
+
+			<b:panel col-md="12" look="primary" style="padding: 5px 5px;">
+
+				<b:column col-md="2" style="margin-bottom: 10px;">
+					<h:form>
+						<b:commandButton icon="glyphicon glyphicon-menu-left"
+							immediate="true" look="primary" value="Zurück"
+							action="schuelerVonKlasseAnzeigen"
+							tooltip="Zurück zur Schüler Anzeige" />
+					</h:form>
+				</b:column>
+				<h:form>
+					<b:growl for="klassen" id="klassenM" allow-dismiss="true"
+						placement-align="center" placementFrom="top" styleClass="message" />
+					<b:column col-md="2" offset-md="6">
+						<b:selectOneMenu id="klassen" value="#{klasseBean.schuelerKlasse}"
+							required="true" requiredMessage="Bitte ein Klasse auswählen."
+							ajax="true" update="klassenM">
+							<f:ajax event="change" render="klassenM" />
+							<f:selectItem itemLabel="(Klasse auswählen)" itemValue="" />
+							<f:selectItems value="#{klasseBean.schuelerKlassenListe}"
+								itemValue="#{schuelerKlasse}" var="schuelerKlasse"
+								itemLabel="Id: #{schuelerKlasse.klasse.klasseId}| &#160; Jahrgangsstufe: #{schuelerKlasse.klasse.jahrgangsstufe}| &#160; Jahr: #{schuelerKlasse.klasse.jahr}" />
+						</b:selectOneMenu>
+					</b:column>
+					<b:column col-md="2" style="text-align: left;">
+						<b:commandButton icon-awesome="fa fa-refresh" look="primary"
+							update="notenAnzeigenForm" value="Noten anzeigen" ajax="true"
+							actionListener="#{fachBean.notenLadenAlsLehrer(user.personId)}" />
+					</b:column>
+
+				</h:form>
+			</b:panel>
+
+			<ui:insert name="notenansicht">
+				<ui:include src="/notenansicht.xhtml" />
+			</ui:insert>
+		</b:panel>
+	</ui:define>
+</ui:composition>

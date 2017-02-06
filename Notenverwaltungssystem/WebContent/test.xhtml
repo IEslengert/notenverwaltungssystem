@@ -1,0 +1,105 @@
+<%-- <p:dataTable var="schuelerFach" paginator="true" rows="10"
+				id="schuelerFachTabelle" emptyMessage="Keine Fächer vorhanden."
+				rowsPerPageTemplate="5,10,15" scrollable="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				value="#{fachBean.schuelerFachListe}" reflow="true"
+				resizableColumns="true" draggableColumns="true" rowHover="true">
+				<p:column style="width:35px">
+					<p:rowToggler />
+				</p:column>
+				<p:column headerText="Fach-Id" sortBy="#{schuelerFach.fach.fachId}">
+					<h:outputText value="#{schuelerFach.fach.fachId}" />
+				</p:column>
+				<p:column headerText="Name" sortBy="#{schuelerFach.fach.name}">
+					<h:outputText value="#{schuelerFach.fach.name}" />
+				</p:column>
+				<p:column headerText="Unterrichtssprache"
+					sortBy="#{schuelerFach.fach.unterrichtssprache}">
+					<h:outputText value="#{schuelerFach.fach.unterrichtssprache}" />
+				</p:column>
+				<p:column headerText="Fach-Notendurchschnitt"
+					sortBy="#{schuelerFach.fachNotendurchschnitt}">
+					<h:outputText value="#{schuelerFach.fachNotendurchschnitt}">
+						<f:convertNumber pattern="#.#" locale="de_DE" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Lehrer Vorname"
+					sortBy="#{schuelerFach.fach.lehrer.vorname}">
+					<h:outputText value="#{schuelerFach.fach.lehrer.vorname}" />
+				</p:column>
+				<p:column headerText="Lehrer Nachname"
+					sortBy="#{schuelerFach.fach.lehrer.nachname}">
+					<h:outputText value="#{schuelerFach.fach.lehrer.nachname}" />
+				</p:column>
+				<p:rowExpansion>
+					<p:dataTable var="klausur" value="#{schuelerFach.klausurenListe}"
+						emptyMessage="Keine Klausuren vorhanden." reflow="true"
+						rowHover="true" resizableColumns="true">
+						<p:column headerText="Id">
+
+							<h:outputText value="#{klausur.klausurId}" />
+						</p:column>
+						<p:column headerText="Note">
+
+							<h:outputText value="#{klausur.note}">
+								<f:convertNumber pattern="#.#" locale="de_DE" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Gewichtung">
+
+							<h:outputText value="#{klausur.gewichtung}" />
+						</p:column>
+						<p:column headerText="Leistungsart">
+
+							<h:outputText value="#{klausur.artLeistung}" />
+						</p:column>
+						<p:column headerText="Punkte">
+
+							<h:outputText value="#{klausur.punkte}" />
+						</p:column>
+						<p:column headerText="Max Punkte">
+
+							<h:outputText value="#{klausur.maxPunkte}" />
+						</p:column>
+						<p:column headerText="Bemerkung" style="word-break: break-all; word-wrap: break-word;">
+
+							<h:outputText value="#{klausur.bemerkung}" />
+						</p:column>
+					</p:dataTable>
+				</p:rowExpansion>
+			</p:dataTable>
+				
+				
+				
+				
+				<p:rowExpansion>
+					<p:dataGrid var="klausur" value="#{schuelerFach.klausurenListe}"
+						emptyMessage="Keine Klausuren vorhanden." columns="3"
+						layout="grid">
+						<p:panel header="Klausur-Id: #{klausur.klausurId}"
+							style="text-align:center">
+							<h:panelGrid columns="2" style="text-align:left">
+
+								<h:outputText value="Note:" />
+								<h:outputText value="#{klausur.note}">
+									<f:convertNumber pattern="#.#" locale="de_DE" />
+								</h:outputText>
+
+								<h:outputText value="Gewichtung:" />
+								<h:outputText value="#{klausur.gewichtung}" />
+
+								<h:outputText value="Leistungsart:" />
+								<h:outputText value="#{klausur.artLeistung}" />
+
+								<h:outputText value="Punkte:" />
+								<h:outputText value="#{klausur.punkte}" />
+								<h:outputText value="Max Punkte:" />
+
+								<h:outputText value="#{klausur.maxPunkte}" />
+
+								<h:outputText value="Bemerkung:" />
+								<h:outputText value="#{klausur.bemerkung}" />
+							</h:panelGrid>
+						</p:panel>
+					</p:dataGrid>
+				</p:rowExpansion> --%>

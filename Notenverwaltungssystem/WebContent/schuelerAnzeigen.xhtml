@@ -1,0 +1,113 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="content">
+
+		<h:form id="schuelerAnzeigenForm">
+			<b:panel col-xs="12" title="Schüler Anzeige" showCollapseLink="false"
+				look="primary">
+
+				<b:growl allow-dismiss="true" placement-align="center"
+					placementFrom="top" styleClass="message" />
+				<b:dataTable disabled="#{empty personBean.schuelerListe}"
+					scrollSize="800px" value="#{personBean.schuelerListe}"
+					scrollCollapse="true" var="schueler" fixedHeader="true"
+					scroll-x="false" responsive="true" lang="de">
+					<b:dataTableColumn value="#{schueler.personId}" lable="Id" />
+					<b:dataTableColumn value="#{schueler.vorname}" />
+					<b:dataTableColumn value="#{schueler.nachname}" />
+					<b:dataTableColumn value="#{schueler.email}" />
+					<b:dataTableColumn value="#{schueler.sorgeberechtigter.vorname}"
+						label="SB-Vorname" />
+					<b:dataTableColumn value="#{schueler.sorgeberechtigter.nachname}"
+						label="SB-Nachname" />
+					<b:dataTableColumn value="#{schueler.sorgeberechtigter.email}"
+						label="SB-Email" />
+					<h:column style="text-align: center;">
+						<f:facet name="header">
+							<h:outputText />
+						</f:facet>
+						<b:commandButton icon-awesome="fa fa-search" look="info"
+							style="margin: 5px 5px;" ajax="true" update="schuelerAnzeigen"
+							actionListener="#{personBean.prepareShowSchueler(schueler.personId)}"
+							oncomplete="$('.schuelerAnzeigenClass').modal();return false;"
+							tooltip="Schüler anzeigen" />
+						<b:commandButton style="cursor: pointer;margin: 5px 5px;" ajax="true"
+							action="#{fachBean.prepareShowNotenAlsSchueler(schueler.personId)}"
+							icon-awesome="fa fa-list-alt" look="primary"
+							tooltip="Notenansicht" />
+						<b:commandButton icon-awesome="fa fa-pencil" look="warning"
+							style="margin: 5px 5px;"
+							action="#{personBean.prepareEditSchueler(schueler.personId)}"
+							tooltip="Schüler editieren" />
+
+
+						<b:commandButton style="cursor: pointer; margin: 5px 5px;"
+							ajax="true" update="@(.message)" look="danger"
+							actionListener="#{personBean.setSchueler(schueler)}"
+							oncomplete="$('.deleteSchuelerClass').modal();return false;"
+							icon-awesome="fa fa-trash" tooltip="Schüler löschen" />
+						<b:commandButton style="cursor: pointer; margin: 5px 5px;"
+							ajax="true" update="@(.message)"
+							actionListener="#{personBean.setSchueler(schueler)}"
+							oncomplete="$('.passwortResetSchuelerClass').modal();return false;"
+							icon-awesome="fa fa-lock" tooltip="Passwort zurücksetzen" />
+					</h:column>
+
+				</b:dataTable>
+
+			</b:panel>
+		</h:form>
+		<b:modal id="schuelerAnzeigen" title="Schüler Anzeige"
+			styleClass="schuelerAnzeigenClass" backdrop="false">
+
+			<ui:insert name="schuelerProfil">
+				<ui:include src="schuelerProfil.xhtml" />
+			</ui:insert>
+
+			<f:facet name="footer">
+				<h:form>
+					<b:button value="Close" dismiss="modal" onclick="return false;"
+						look="danger" />
+				</h:form>
+			</f:facet>
+
+		</b:modal>
+		<b:modal id="deleteSchueler" title="Schüler löschen"
+			styleClass="deleteSchuelerClass" backdrop="false">
+			<h:outputText value="Wollen Sie den Schüler wirklich löschen?" />
+
+			<f:facet name="footer">
+				<h:form>
+					<b:commandButton value="Ja" ajax="true"
+						update="schuelerAnzeigenForm"
+						actionListener="#{personBean.deleteSchueler}"
+						oncomplete="$('.deleteSchuelerClass').modal('hide');return false;"
+						look="success" icon="glyphicon glyphicon-ok" />
+					<b:button value="Nein" dismiss="modal" onclick="return false;"
+						look="danger" icon="glyphicon glyphicon-remove" />
+				</h:form>
+			</f:facet>
+		</b:modal>
+		<b:modal id="passwortResetSchueler" title="Passwort zurücksetzen"
+			styleClass="passwortResetSchuelerClass" backdrop="false">
+			<h:outputText value="Wollen Sie wirklich das Passwort zurücksetzen" />
+
+			<f:facet name="footer">
+				<h:form>
+					<b:commandButton value="Ja" ajax="true"
+						update="schuelerAnzeigenForm" id="test"
+						actionListener="#{personBean.neuesPasswortGenerierenSchueler}"
+						oncomplete="$('.passwortResetSchuelerClass').modal('hide');return false;"
+						look="success" icon="glyphicon glyphicon-ok" />
+					<b:button value="Nein" dismiss="modal" onclick="return false;"
+						look="danger" icon="glyphicon glyphicon-remove" />
+				</h:form>
+			</f:facet>
+		</b:modal>
+	</ui:define>
+</ui:composition>

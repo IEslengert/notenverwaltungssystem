@@ -1,0 +1,78 @@
+<ui:composition template="/template/masterBenutzer.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+	<ui:define name="content">
+
+		<b:panel col-md="12" look="primary" title="Fächer Anzeige"
+			showCollapseLink="false">
+			<b:panel col-md="12" look="primary">
+				<h:form>
+					<b:commandButton icon="glyphicon glyphicon-menu-left"
+						immediate="true" look="primary" style="margin: 0 5px;float: left"
+						value="Zurück" action="klassenAnzeigen"
+						tooltip="Zurück zur Klassen Anzeige" />
+					<b:commandButton icon="glyphicon glyphicon-plus" look="primary"
+						style="margin: 0 5px;float: right;" value="Fächer hinzufügen"
+						action="#{fachBean.prepareCreateFach}" tooltip="Fach hinzufügen" />
+				</h:form>
+			</b:panel>
+			<b:panel col-md="12" look="primary">
+				<h:form id="faecherAnzeigenForm">
+					<b:growl allow-dismiss="true" placement-align="center"
+						placementFrom="top" styleClass="message" />
+					<b:dataTable disabled="#{empty fachBean.faecherListe}"
+						scrollSize="800px" value="#{fachBean.faecherListe}"
+						scrollCollapse="true" var="fach" fixedHeader="true"
+						scroll-x="false" responsive="true" lang="de">
+						<b:dataTableColumn value="#{fach.fachId}" label="Id" />
+						<b:dataTableColumn value="#{fach.name}" label="Fachname"/>
+						<b:dataTableColumn value="#{fach.unterrichtssprache}" />
+						<b:dataTableColumn value="#{fach.lehrer.personId}"
+							label="Lehrer Id" />
+						<b:dataTableColumn value="#{fach.lehrer.personalNr}"
+							label="Lehrer PNr" />
+						<b:dataTableColumn value="#{fach.lehrer.vorname}"
+							label="Lehrer Vorname" />
+						<b:dataTableColumn value="#{fach.lehrer.nachname}"
+							label="Lehrer Nachname" />
+						<h:column style="text-align: center;">
+							<f:facet name="header">
+								<h:outputText />
+							</f:facet>
+							<b:commandButton icon-awesome="fa fa-pencil" look="warning"
+								style="margin: 5px 5px;"
+								action="#{fachBean.prepareEditFach(fach.fachId)}"
+								tooltip="Fach editieren" />
+							<b:commandButton style="cursor: pointer;margin: 5px 5px;"
+								ajax="true" update="@(.message)" look="danger"
+								actionListener="#{fachBean.setFach(fach)}"
+								oncomplete="$('.deleteFachClass').modal();return false;"
+								icon-awesome="fa fa-trash" tooltip="Fach löschen" />
+						</h:column>
+					</b:dataTable>
+				</h:form>
+			</b:panel>
+		</b:panel>
+		<b:modal id="deleteFach" title="Fach löschen"
+			styleClass="deleteFachClass" backdrop="false">
+			<h:outputText value="Wollen Sie das Fach wirklich löschen?" />
+			<f:facet name="footer">
+				<h:form>
+
+					<b:commandButton value="Ja" ajax="true"
+						update="faecherAnzeigenForm"
+						actionListener="#{fachBean.deleteFach}"
+						oncomplete="$('.deleteFachClass').modal('hide');return false;"
+						look="success" icon="glyphicon glyphicon-ok" />
+					<b:button value="Nein" dismiss="modal" onclick="return false;"
+						look="danger" icon="glyphicon glyphicon-remove" />
+				</h:form>
+			</f:facet>
+		</b:modal>
+	</ui:define>
+</ui:composition>
