@@ -52,7 +52,7 @@ public class AuthentifizierungFilter implements Filter {
 						chain.doFilter(request, response);
 					} else if (benutzer.hasRolle(Rolle.Lehrer) && (reqURI.indexOf("/eingeloggterBenutzerProfil") >= 0
 							|| reqURI.indexOf("/sorgeberechtigter") >= 0 || reqURI.indexOf("/notenansicht.xhtml") >= 0|| reqURI.indexOf("/notenansichtVonSchueler.xhtml") >= 0
-							|| reqURI.indexOf("/klasseAnzeigen") >= 0 || reqURI.indexOf("/klassenAnzeigen") >= 0
+							|| reqURI.indexOf("/klasseAnzeigen") >= 0 || reqURI.indexOf("/meineKlassenAnzeigen") >= 0
 							|| reqURI.indexOf("/klausurErfassen") >= 0 || reqURI.indexOf("/meineFaecher") >= 0
 							|| reqURI.indexOf("/schuelerProfil") >= 0
 							|| reqURI.indexOf("/schuelerVonKlasseAnzeigen") >= 0
