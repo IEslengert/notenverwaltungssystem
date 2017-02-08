@@ -17,10 +17,13 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import de.hslu.infomac.notenverwaltung.embeddables.SchuelerFachPK;
+import de.hslu.infomac.notenverwaltung.entities.Benutzer;
 import de.hslu.infomac.notenverwaltung.entities.Fach;
 import de.hslu.infomac.notenverwaltung.entities.Klausur;
+import de.hslu.infomac.notenverwaltung.entities.Lehrer;
 import de.hslu.infomac.notenverwaltung.entities.Schueler;
 import de.hslu.infomac.notenverwaltung.entities.SchuelerFach;
+import de.hslu.infomac.notenverwaltung.enumerations.Rolle;
 import de.hslu.infomac.notenverwaltung.helper.HibernateUtil;
 import de.hslu.infomac.notenverwaltung.helper.JsfUtil;
 
@@ -198,7 +201,7 @@ public class FachBean implements Serializable {
 		session.getTransaction().commit();
 		return faecher;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Fach> getFaecherByLehrer(long lehrerId) {
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -437,7 +440,6 @@ public class FachBean implements Serializable {
 		edit(schuelerFach);
 	}
 
-
 	public void createKlausur() {
 		for (Klausur klausur : klausurListe) {
 			create(klausur);
@@ -470,7 +472,8 @@ public class FachBean implements Serializable {
 
 	public void notenLaden() {
 		schuelerFachListe = null;
-		schuelerFachListe = getSchuelerFaecherBySchuelerAndKlasse(klasseBean.getSchuelerKlasse().getId().getSchuelerId(),
+		schuelerFachListe = getSchuelerFaecherBySchuelerAndKlasse(
+				klasseBean.getSchuelerKlasse().getId().getSchuelerId(),
 				klasseBean.getSchuelerKlasse().getId().getKlasseId());
 		if (schuelerFachListe != null && !schuelerFachListe.isEmpty()) {
 			for (SchuelerFach schuelerFach : schuelerFachListe) {
@@ -485,8 +488,13 @@ public class FachBean implements Serializable {
 
 	public void notenLadenAlsLehrer(long lehrerId) {
 		schuelerFachListe = null;
-		boolean istKlassenLehrer = (klasseBean.getKlasse().getKlassenLehrer().getPersonId() == lehrerId);
-		if (istKlassenLehrer) {
+		Lehrer klassenLehrer = klasseBean.getKlasse().getKlassenLehrer();
+		boolean istKlassenLehrer = false;
+		if (klassenLehrer != null &&klassenLehrer.getPersonId()!= null) {
+			istKlassenLehrer = (klassenLehrer.getPersonId() == lehrerId);
+		}
+		boolean istSchulleiter = ((Benutzer) personBean.getPersonById(lehrerId)).hasRolle(Rolle.Schulleiter);
+		if (istKlassenLehrer || istSchulleiter) {
 			schuelerFachListe = getSchuelerFaecherBySchuelerAndKlasse(
 					klasseBean.getSchuelerKlasse().getId().getSchuelerId(),
 					klasseBean.getSchuelerKlasse().getId().getKlasseId());

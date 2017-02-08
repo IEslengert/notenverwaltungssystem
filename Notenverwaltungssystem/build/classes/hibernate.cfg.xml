@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.MySQLDialect
+		</property>
+		<property name="hibernate.connection.driver_class">
+			com.mysql.jdbc.Driver
+		</property>
+
+		<property name="hibernate.connection.url">
+			jdbc:mysql://localhost:3306/notenverwaltungssystem
+		</property>
+		<property name="hibernate.connection.username">
+			root
+		</property>
+		<property name="hibernate.connection.password">
+		</property>
+
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Sorgeberechtigter" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Benutzer" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Fach" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Klasse" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Klausur" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Lehrer" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Person" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Schueler" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.SchuelerKlasse" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.SchuelerFach" />
+		<mapping class="de.hslu.infomac.notenverwaltung.entities.Konferenz" />
+		<mapping
+			class="de.hslu.infomac.notenverwaltung.embeddables.SchuelerKlassePK" />
+		<mapping class="de.hslu.infomac.notenverwaltung.embeddables.SchuelerFachPK" />
+	</session-factory>
+</hibernate-configuration>
