@@ -66,8 +66,15 @@ public class SchuelerKlasse implements Serializable {
 		this.klasse = klasse;
 	}
 
-	public Status getStatus() {
-		return status;
+	public String getStatus() {
+		if (status.equals(Status.NichtBestanden)) {
+			return "Nicht Bestanden";
+		} else if (status.equals(Status.Bestanden)) {
+			return "Bestanden";
+		} else {
+			return "Eingeschrieben";
+		}
+
 	}
 
 	public void setStatus(Status status) {
@@ -97,12 +104,12 @@ public class SchuelerKlasse implements Serializable {
 	public void setNotendurchschnitt(Double notendurchschnitt) {
 		this.notendurchschnitt = notendurchschnitt;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final long prime = 31;
 		long result = 1;
-		result = prime * result + getId().getKlasseId()+ getId().getSchuelerId();
+		result = prime * result + getId().getKlasseId() + getId().getSchuelerId();
 		return (int) result;
 	}
 

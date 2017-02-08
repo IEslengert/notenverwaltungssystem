@@ -566,6 +566,10 @@ public class KlasseBean implements Serializable {
 				double notendurchschnitt = schuelerNotendurchschnittBerechnen(schuelerKlasse.getId().getSchuelerId(),
 						schuelerKlasse.getId().getKlasseId());
 
+				if (notendurchschnitt == 0.0) {
+					hatKlasseBestanden = false;
+				}
+
 				schuelerKlasse.setIstVersetzungsgefaehrdet(!hatKlasseBestanden);
 				schuelerKlasse.setNotendurchschnitt(notendurchschnitt);
 				String bemerkung = null;
@@ -681,7 +685,9 @@ public class KlasseBean implements Serializable {
 		}
 		double notendurchschnitt = 0;
 		try {
-			notendurchschnitt = df.parse(df.format(notenSummiert / anzahlNoten)).doubleValue();
+			if (anzahlNoten > 0) {
+				notendurchschnitt = df.parse(df.format(notenSummiert / anzahlNoten)).doubleValue();
+			}
 		} catch (ParseException e) {
 			JsfUtil.addErrorMessage(null, e.getMessage());
 		}

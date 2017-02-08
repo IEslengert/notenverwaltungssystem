@@ -26,7 +26,7 @@
 				<b:column style="margin: 5px 10px;" col-md="2">
 					<h:outputText value="Status:" />
 				</b:column>
-				<b:column style="margin: 5px 10px;" col-md="1">
+				<b:column style="margin: 5px 10px;" col-md="4">
 					<h:outputText value="#{klasseBean.schuelerKlasse.status}" />
 				</b:column>
 			</b:row>
@@ -41,7 +41,7 @@
 				<b:column style="margin: 5px 10px;" col-md="2">
 					<h:outputText value="Notendurchschnitt:" />
 				</b:column>
-				<b:column style="margin: 5px 10px;" col-md="1">
+				<b:column style="margin: 5px 10px;" col-md="4">
 					<h:outputText
 						value="#{klasseBean.schuelerKlasse.notendurchschnitt}">
 						<f:convertNumber pattern="#.#" locale="de_DE" />
@@ -58,7 +58,7 @@
 				<b:column style="margin: 5px 10px;" col-md="2">
 					<h:outputText value="Bemerkung:" />
 				</b:column>
-				<b:column style="margin: 5px 10px;" col-md="1">
+				<b:column style="margin: 5px 10px;" col-md="4">
 					<h:outputText value="#{klasseBean.schuelerKlasse.bemerkung}" />
 				</b:column>
 			</b:row>
@@ -74,7 +74,7 @@
 					rendered="#{klasseBean.schuelerKlasse.klasse.istAktiv}">
 					<h:outputText value="Versetzungsgefährdet:" />
 				</b:column>
-				<b:column style="margin: 5px 10px;" col-md="1"
+				<b:column style="margin: 5px 10px;" col-md="4"
 					rendered="#{klasseBean.schuelerKlasse.klasse.istAktiv}">
 					<h:outputText
 						value="#{klasseBean.schuelerKlasse.istVersetzungsgefaehrdet? 'Ja': 'Nein'}" />
