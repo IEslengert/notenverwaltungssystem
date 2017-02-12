@@ -89,8 +89,8 @@
 				scrollSize="800px" scrollCollapse="true" fixedHeader="true"
 				scroll-x="false" responsive="true" lang="de" var="schuelerFach"
 				value="#{fachBean.schuelerFachListe}">
-				<b:dataTableColumn value="#{schuelerFach.fach.fachId}"
-					label="Fach-Id" />
+				<b:dataTableColumn value="#{fachBean.schuelerFachListe.indexOf(schuelerFach)+ 1}"
+					label="" />
 				<b:dataTableColumn value="#{schuelerFach.fach.name}" label="Name" />
 				<b:dataTableColumn value="#{schuelerFach.fach.unterrichtssprache}"
 					label="Unterrichtssprache" />
