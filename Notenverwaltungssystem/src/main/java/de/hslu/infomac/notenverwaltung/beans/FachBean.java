@@ -424,7 +424,7 @@ public class FachBean implements Serializable {
 		for (Klausur klausur : klausurenListe) {
 			double note = klausur.getNote();
 			double gewichtung = klausur.getGewichtung();
-			System.out.println(note * gewichtung);
+			//System.out.println(note * gewichtung);
 			notenSummiert = notenSummiert + note * gewichtung;
 			anzahlNoten = anzahlNoten + gewichtung;
 		}

@@ -117,18 +117,16 @@ public class AuthentifizierungBean implements Serializable {
 
 					if (benutzer instanceof Schueler) {
 						personBean.setLehrerEingeloggt(false);
+						personBean.setSorgeberechtigter(((Schueler) benutzer).getSorgeberechtigter());
 					} else {
 						personBean.setLehrerEingeloggt(true);
 					}
 
 					passwort = null;
+					
 					if (benutzer.isErsterLogin()) {
-
 						return "passwortAendern.xhtml?faces-redirect=true";
-					} else {
-						if (benutzer instanceof Schueler) {
-							personBean.setSorgeberechtigter(((Schueler) benutzer).getSorgeberechtigter());
-						}
+					} else {						
 						return "eingeloggterBenutzerProfil.xhtml?faces-redirect=true";
 					}
 				}

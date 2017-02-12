@@ -133,7 +133,7 @@
 				scroll-x="false" responsive="true" lang="de" var="klausur"
 				value="#{fachBean.klausurListe}">
 
-				<b:dataTableColumn value="#{klausur.klausurId}" label="Id" />
+				<b:dataTableColumn value="#{fachBean.klausurListe.indexOf(klausur)+ 1}" label="" />
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Note" />

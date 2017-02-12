@@ -114,14 +114,13 @@
 									<h:outputText value="E-Mail Adresse*:" />
 								</b:column>
 								<b:column medium-screen="2">
-									<b:inputText placeholder="E-Mail Adresse" id="email"
-										disabled="#{personBean.wirdEditiert}"
+									<b:inputText placeholder="E-Mail Adresse" id="email"										
 										value="#{personBean.schueler.email}" required="true"
 										requiredMessage="Bitte eine E-mail Adresse eingeben."
 										ajax="true" autocomplete="true"
 										validatorMessage="Ungültiges E-Mail Format!" update="emailM">
 										<f:validateRegex
-											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$" />
 									</b:inputText>
 								</b:column>
 							</b:row>
@@ -402,14 +401,13 @@
 									<h:outputText value="SB-E-Mail Adresse*:" />
 								</b:column>
 								<b:column medium-screen="2">
-									<b:inputText placeholder="E-Mail Adresse" id="emailSB"
-										disabled="#{personBean.wirdEditiert}"
+									<b:inputText placeholder="E-Mail Adresse" id="emailSB"										
 										value="#{personBean.sorgeberechtigter.email}" required="true"
 										requiredMessage="Bitte eine SB-E-mail Adresse eingeben."
 										ajax="true" autocomplete="true"
 										validatorMessage="Ungültiges E-Mail Format!" update="emailSBM">
 										<f:validateRegex
-											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$" />
 									</b:inputText>
 								</b:column>
 							</b:row>

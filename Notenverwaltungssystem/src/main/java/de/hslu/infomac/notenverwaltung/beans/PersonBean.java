@@ -486,9 +486,23 @@ public class PersonBean implements Serializable {
 	}
 
 	public void editSchueler() {
-		schueler.setSorgeberechtigter(sorgeberechtigter);
-		edit(schueler);
-		JsfUtil.addSuccessMessage("createEditSchueler:edit", "Der Schüler wurde erfolgreich aktualisiert.");
+		Person schuelerEmail = getPersonByEmail(schueler.getEmail());
+		Person sorgeberechtigterEmail = getPersonByEmail(sorgeberechtigter.getEmail());
+
+		if (schuelerEmail == null || schuelerEmail.getPersonId() == schueler.getPersonId()) {
+			if (sorgeberechtigterEmail == null
+					|| sorgeberechtigterEmail.getPersonId() == sorgeberechtigter.getPersonId()) {
+				schueler.setSorgeberechtigter(sorgeberechtigter);
+				edit(schueler);
+				JsfUtil.addSuccessMessage("createEditSchueler:edit", "Der Schüler wurde erfolgreich aktualisiert.");
+			} else {
+				JsfUtil.addErrorMessage("createEditSchueler:emailSB",
+						"Die gewählte Sorgeberechtigter-Email-Adresse existiert bereits.");
+			}
+		} else {
+			JsfUtil.addErrorMessage("createEditSchueler:email",
+					"Die gewählte Schüler-Email-Adresse existiert bereits.");
+		}
 	}
 
 	public void editLehrer() {
@@ -501,7 +515,7 @@ public class PersonBean implements Serializable {
 				session.setAttribute("user", lehrer);
 			}
 			JsfUtil.addSuccessMessage("createEditLehrer:edit", "Der Lehrer wurde erfolgreich aktualisiert.");
-		}else{
+		} else {
 			JsfUtil.addErrorMessage("createEditLehrer:email", "Die gewählte Email-Adresse existiert bereits.");
 		}
 	}

@@ -95,7 +95,7 @@
 						scrollSize="800px" value="#{klasseBean.konferenzenListe}"
 						scrollCollapse="true" var="konferenz" fixedHeader="true"
 						scroll-x="false" responsive="true" lang="de">
-						<b:dataTableColumn value="#{konferenz.konferenzId}" label="Id" />
+						<b:dataTableColumn value="#{klasseBean.konferenzenListe.indexOf(konferenz)+ 1}" label="" />
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="Datum" />

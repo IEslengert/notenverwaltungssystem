@@ -266,8 +266,8 @@ public class KlasseBean implements Serializable {
 
 	public void createKlasse() {
 		int nowYear = Calendar.getInstance().get(Calendar.YEAR);
-		int futureYear = 2200;
-		if (klasse.getJahr() >= nowYear && klasse.getJahr() <= futureYear) {
+		int futureYear = nowYear+20;
+		if (klasse.getJahr() >= nowYear -1 && klasse.getJahr() <= futureYear) {
 			Lehrer klassenLehrer = klasse.getKlassenLehrer();
 			Klasse jahrLehrerUnique = null;
 			if (klassenLehrer != null) {
@@ -295,10 +295,10 @@ public class KlasseBean implements Serializable {
 			}
 		} else if (klasse.getJahr() < nowYear) {
 			JsfUtil.addErrorMessage("createEditKlasse:jahr",
-					"Das Jahr der Klasse darf nicht in der Vergangenheit sein.");
+					"Das Jahr der Klasse darf nicht zu weit in der Vergangenheit liegen.");
 		} else if (klasse.getJahr() > futureYear) {
 			JsfUtil.addErrorMessage("createEditKlasse:jahr",
-					"Das Jahr der Klasse darf nicht zu weit in der Zukuft sein.");
+					"Das Jahr der Klasse darf nicht zu weit in der Zukuft liegen.");
 		}
 	}
 
