@@ -35,7 +35,7 @@
 							action="#{personBean.prepareEditLehrer(lehrer.personId)}"
 							tooltip="Lehrer editieren" />
 						<b:commandButton style="cursor: pointer;margin: 5px 5px;"
-							ajax="true" update="@(.message)" look="danger"
+							ajax="true" update="@(.message)" look="danger" disabled="#{lehrer.personId == user.personId}"
 							actionListener="#{personBean.setLehrer(lehrer)}"
 							oncomplete="$('.deleteLehrerClass').modal();return false;"
 							icon-awesome="fa fa-trash" tooltip="Lehrer löschen" />
@@ -44,7 +44,7 @@
 							ajax="true" update="@(.message)" look="default"
 							actionListener="#{personBean.setLehrer(lehrer)}"
 							oncomplete="$('.passwortResetLehrerClass').modal();return false;"
-							icon-awesome="fa fa-lock" tooltip="Passwort zurücksetzen" />
+							icon-awesome="fa fa-unlock" tooltip="Passwort zurücksetzen" />
 
 					</h:column>
 

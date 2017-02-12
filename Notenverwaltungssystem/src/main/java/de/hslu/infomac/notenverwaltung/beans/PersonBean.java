@@ -390,7 +390,7 @@ public class PersonBean implements Serializable {
 				sorgeberechtigter.setSchueler(schueler);
 				create(sorgeberechtigter);
 
-				 nachrichtAnBenutzerSenden(schueler, generatedPasswort, true);
+				nachrichtAnBenutzerSenden(schueler, generatedPasswort, true);
 
 				JsfUtil.addSuccessMessage("createEditSchueler:create", "Der Schüler wurde erfolgreich angelegt.");
 				schueler = new Schueler();
@@ -449,7 +449,7 @@ public class PersonBean implements Serializable {
 			empfaengerName = mailBean.empaengerFormatieren("", benutzer.getVorname(), benutzer.getNachname());
 		}
 		mailBean.sendMail(betreff, inhalt, empfaenger, null, benutzer.getAnrede(), empfaengerName,
-				"notenverwaltungssystem@gmail.com", "Notenverwaltungssystem");
+				"mic311.notenverwaltungssystem@gmail.com", "Notenverwaltungssystem");
 	}
 
 	// TODO: Mail an Lehrer entkommentieren
@@ -469,7 +469,7 @@ public class PersonBean implements Serializable {
 				// schüler erstellen
 				create(lehrer);
 
-				 nachrichtAnBenutzerSenden(lehrer, generatedPasswort, true);
+				nachrichtAnBenutzerSenden(lehrer, generatedPasswort, true);
 
 				lehrer = new Lehrer();
 				JsfUtil.addSuccessMessage("createEditLehrer:create", "Der Lehrer wurde erfolgreich angelegt.");
@@ -492,13 +492,18 @@ public class PersonBean implements Serializable {
 	}
 
 	public void editLehrer() {
-		edit(lehrer);
-		HttpSession session = Util.getSession();
-		Benutzer benutzer = (Benutzer) session.getAttribute("user");
-		if (benutzer.getPersonId() == lehrer.getPersonId()) {
-			session.setAttribute("user", lehrer);
+		Person lehrerEmail = getPersonByEmail(lehrer.getEmail());
+		if (lehrerEmail == null || lehrerEmail.getPersonId() == lehrer.getPersonId()) {
+			edit(lehrer);
+			HttpSession session = Util.getSession();
+			Benutzer benutzer = (Benutzer) session.getAttribute("user");
+			if (benutzer.getPersonId() == lehrer.getPersonId()) {
+				session.setAttribute("user", lehrer);
+			}
+			JsfUtil.addSuccessMessage("createEditLehrer:edit", "Der Lehrer wurde erfolgreich aktualisiert.");
+		}else{
+			JsfUtil.addErrorMessage("createEditLehrer:email", "Die gewählte Email-Adresse existiert bereits.");
 		}
-		JsfUtil.addSuccessMessage("createEditLehrer:edit", "Der Lehrer wurde erfolgreich aktualisiert.");
 	}
 
 	public void deleteSchueler() {

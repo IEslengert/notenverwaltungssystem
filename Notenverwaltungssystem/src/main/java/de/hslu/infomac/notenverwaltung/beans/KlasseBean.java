@@ -587,7 +587,7 @@ public class KlasseBean implements Serializable {
 							schuelerKlasse.getSchueler().getAnrede(),
 							schuelerKlasse.getSchueler().getVorname() + " "
 									+ schuelerKlasse.getSchueler().getNachname(),
-							"notenverwaltungssystem@gmail.com", "Notenverwaltungssystem");
+							"mic311.notenverwaltungssystem@gmail.com", "Notenverwaltungssystem");
 
 					schuelerKlasse.setStatus(Status.NichtBestanden);
 				}
@@ -627,7 +627,7 @@ public class KlasseBean implements Serializable {
 							schuelerKlasse.getSchueler().getAnrede(),
 							schuelerKlasse.getSchueler().getVorname() + " "
 									+ schuelerKlasse.getSchueler().getNachname(),
-							"notenverwaltungssystem@gmail.com", "Notenverwaltungssystem");
+							"mic311.notenverwaltungssystem@gmail.com", "Notenverwaltungssystem");
 
 				}
 				schuelerKlasse.setBemerkung(bemerkung);

@@ -94,7 +94,7 @@ public class MailBean implements Serializable {
 
 	public void sendKontaktMail() {
 		List<String> empfaenger = new ArrayList<String>();
-		empfaenger.add("notenverwaltungssystem@gmail.com");
+		empfaenger.add("mic311.notenverwaltungssystem@gmail.com");
 		sendMail(betreff, inhalt, empfaenger, null, null, "Notenverwaltungssystem", senderEmail, senderName);
 		inhalt = null;
 		senderEmail = null;
@@ -108,7 +108,7 @@ public class MailBean implements Serializable {
 
 		if (empfaengerEmails != null && !empfaengerEmails.isEmpty()) {
 
-			final String username = "notenverwaltungssystem@gmail.com";
+			final String username = "mic311.notenverwaltungssystem@gmail.com";
 			final String password = "BtAm]3K5}.mVDw";
 
 			Properties props = new Properties();
