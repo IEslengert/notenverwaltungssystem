@@ -192,7 +192,7 @@ public class MailBean implements Serializable {
 		}
 	}
 
-	public String empaengerFormatieren(final String titel, final String vorname, final String nachname) {
+	public String empfaengerFormatieren(final String titel, final String vorname, final String nachname) {
 		String empfaenger = "";
 		if (!StringUtils.isEmpty(titel)) {
 			empfaenger += titel;

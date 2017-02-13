@@ -443,10 +443,10 @@ public class PersonBean implements Serializable {
 		String empfaengerName = "";
 		if (benutzer instanceof Lehrer) {
 			Lehrer lehrer = (Lehrer) benutzer;
-			empfaengerName = mailBean.empaengerFormatieren(lehrer.getTitel(), lehrer.getVorname(),
+			empfaengerName = mailBean.empfaengerFormatieren(lehrer.getTitel(), lehrer.getVorname(),
 					lehrer.getNachname());
 		} else {
-			empfaengerName = mailBean.empaengerFormatieren("", benutzer.getVorname(), benutzer.getNachname());
+			empfaengerName = mailBean.empfaengerFormatieren("", benutzer.getVorname(), benutzer.getNachname());
 		}
 		mailBean.sendMail(betreff, inhalt, empfaenger, null, benutzer.getAnrede(), empfaengerName,
 				"mic311.notenverwaltungssystem@gmail.com", "Notenverwaltungssystem");

@@ -123,10 +123,10 @@ public class AuthentifizierungBean implements Serializable {
 					}
 
 					passwort = null;
-					
+
 					if (benutzer.isErsterLogin()) {
 						return "passwortAendern.xhtml?faces-redirect=true";
-					} else {						
+					} else {
 						return "eingeloggterBenutzerProfil.xhtml?faces-redirect=true";
 					}
 				}
@@ -141,15 +141,11 @@ public class AuthentifizierungBean implements Serializable {
 	}
 
 	public String logout() {
-		invalidateSession();
-		return "/login.xhtml?faces-redirect=true";
-	}
-
-	private void invalidateSession() {
 		final HttpSession session = Util.getSession();
 		if (session != null) {
 			session.invalidate();
 		}
+		return "/login.xhtml?faces-redirect=true";
 	}
 
 }

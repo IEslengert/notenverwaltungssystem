@@ -551,7 +551,7 @@ public class KlasseBean implements Serializable {
 		String betreff = "Einladung zur Klassenkonferenz";
 
 		mailBean.sendMail(betreff, inhalt, empfaenger, null, null, null, klassenLehrer.getEmail(),
-				mailBean.empaengerFormatieren(klassenLehrer.getTitel(), klassenLehrer.getVorname(),
+				mailBean.empfaengerFormatieren(klassenLehrer.getTitel(), klassenLehrer.getVorname(),
 						klassenLehrer.getNachname()));
 	}
 
