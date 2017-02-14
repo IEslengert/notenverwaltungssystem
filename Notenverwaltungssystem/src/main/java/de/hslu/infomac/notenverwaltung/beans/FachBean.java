@@ -350,7 +350,7 @@ public class FachBean implements Serializable {
 		return "klausurErfassen.xhtml?faces-redirect=true";
 	}
 
-	public void klausurFormularLaden() {
+	public void prepareKlausurFormular() {
 		klausurListe = new ArrayList<Klausur>();
 		List<SchuelerFach> schuelerFacherListe = getSchuelerFaecherByFach(fach.getFachId());
 		if (schuelerFacherListe != null && !schuelerFacherListe.isEmpty()) {
