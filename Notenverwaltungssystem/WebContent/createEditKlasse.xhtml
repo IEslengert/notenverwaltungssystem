@@ -37,7 +37,7 @@
 								style="width: 100%;height: 38px"
 								value="#{klasseBean.klasse.klassenLehrer}" var="lehrer"
 								filter="true" filterMatchMode="contains"
-								converter="benutzerConverter">
+								converter="#{benutzerConverter}">
 								<f:ajax event="change" render="klassenLehrerM"></f:ajax>
 								<f:selectItem itemLabel="(Bitte auswählen)" itemValue="" />
 								<f:selectItems value="#{personBean.lehrerListe}"
