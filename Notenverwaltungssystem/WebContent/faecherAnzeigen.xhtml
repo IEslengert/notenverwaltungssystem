@@ -10,6 +10,15 @@
 
 		<b:panel col-md="12" look="primary" title="Fächer Anzeige"
 			showCollapseLink="false">
+			<h:form>
+				<b:row rendered="#{klasseBean.klasse.istAktiv==false}">
+					<b:column col-md="6" offset-md="3">
+						<b:alert severity="warning" closable="true"
+							title="Sie dürfen keine neuen Fächer in einer deaktivierten Klasse angelegt.">
+						</b:alert>
+					</b:column>
+				</b:row>
+			</h:form>
 			<b:panel col-md="12" look="primary">
 				<h:form>
 					<b:commandButton icon="glyphicon glyphicon-menu-left"
@@ -17,6 +26,7 @@
 						value="Zurück" action="klassenAnzeigen"
 						tooltip="Zurück zur Klassen Anzeige" />
 					<b:commandButton icon="glyphicon glyphicon-plus" look="primary"
+						disabled="#{klasseBean.klasse.istAktiv==false}"
 						style="margin: 0 5px;float: right;" value="Fächer hinzufügen"
 						action="#{fachBean.prepareCreateFach}" tooltip="Fach hinzufügen" />
 				</h:form>
@@ -30,7 +40,7 @@
 						scrollCollapse="true" var="fach" fixedHeader="true"
 						scroll-x="false" responsive="true" lang="de">
 						<b:dataTableColumn value="#{fach.fachId}" label="Id" />
-						<b:dataTableColumn value="#{fach.name}" label="Fachname"/>
+						<b:dataTableColumn value="#{fach.name}" label="Fachname" />
 						<b:dataTableColumn value="#{fach.unterrichtssprache}" />
 						<b:dataTableColumn value="#{fach.lehrer.personId}"
 							label="Lehrer Id" />

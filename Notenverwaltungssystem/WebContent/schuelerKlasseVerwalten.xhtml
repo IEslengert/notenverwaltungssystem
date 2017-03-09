@@ -8,7 +8,16 @@
 	<ui:define name="content">
 		<b:panel span="12" look="primary" title="Schüler Zuordnung"
 			showCollapseLink="false">
-			<b:panel col-md="12">
+			<h:form>
+				<b:row rendered="#{klasseBean.klasse.istAktiv==false}">
+					<b:column col-md="5" offset-md="3">
+						<b:alert severity="warning" closable="true"
+							title="Schüler in deaktivierten Klassen dürfen nicht mehr bearbeitet werden.">
+						</b:alert>
+					</b:column>
+				</b:row>
+			</h:form>
+			<b:panel col-md="12" look="primary">
 				<h:form>
 					<b:commandButton icon="glyphicon glyphicon-menu-left"
 						immediate="true" look="primary" style="margin: 0 5px;float: left"
@@ -18,13 +27,7 @@
 			</b:panel>
 			<b:panel col-md="12" look="primary" id="schuelerZuordnungPanel">
 				<h:form id="schuelerZuordnung">
-					<b:row rendered="#{klasseBean.klasse.istAktiv==false}">
-						<b:column col-md="5" offset-md="3">
-							<b:alert severity="warning" closable="true"
-								title="Schüler in deaktivierten Klassen können nicht mehr bearbeitet werden.">
-							</b:alert>
-						</b:column>
-					</b:row>
+
 					<b:row>
 						<b:column>
 							<p:pickList id="schuelerList"
